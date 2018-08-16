@@ -80,6 +80,7 @@ public class DataController {
             out.write(len);  
             out.flush();  
         }  
+        bis.close();
         out.close();  
     }  
 }
