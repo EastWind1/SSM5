@@ -47,10 +47,15 @@ public class DataController {
         String fileName = file.getOriginalFilename();    
         File dir = new File(path,fileName);          
         if(!dir.exists()){  
-            dir.mkdirs();  
+            dir.createNewFile();  
         }  
-        //MultipartFile自带的解析方法  
-        file.transferTo(dir);  
+        //MultipartFile自带的解析方法 
+        try{
+        	file.transferTo(dir);  
+        }
+        catch(IOException e){
+        	
+        }
         return "ok!";  
     }  
       
