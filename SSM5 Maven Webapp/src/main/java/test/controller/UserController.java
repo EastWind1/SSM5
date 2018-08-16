@@ -88,7 +88,7 @@ public class UserController {
    } 	
    @RequestMapping(value="/add",method=RequestMethod.POST)  
    @ResponseBody
-   public int add(@RequestBody User user){
+   public int add(@RequestBody User user){ //@RequestBody 常用于解析json
 	   if(user.getUserName()!=null)
 		   userService.newUser(user);
 	   return user.getId();

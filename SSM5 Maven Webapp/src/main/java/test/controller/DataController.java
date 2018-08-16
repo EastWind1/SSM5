@@ -66,14 +66,12 @@ public class DataController {
      * @throws Exception  
      */  
     @RequestMapping("/down")  
-    public void down(HttpServletRequest request,HttpServletResponse response) throws Exception{  
+    public void down(HttpServletRequest request,HttpServletResponse response,String filename) throws Exception{  
         //模拟文件，myfile.txt为需要下载的文件  
-        String fileName = request.getSession().getServletContext().getRealPath("upload")+"/myfile.txt";  
+        String url = request.getSession().getServletContext().getRealPath("upload")+"\\"+filename;  
         //获取输入流  
-        InputStream bis = new BufferedInputStream(new FileInputStream(new File(fileName)));  
-        //假如以中文名下载的话  
-        String filename = "下载文件.txt";  
-        //转码，免得文件名中文乱码  
+        InputStream bis = new BufferedInputStream(new FileInputStream(new File(url)));  
+        //假如以中文名下载的话   
         filename = URLEncoder.encode(filename,"UTF-8");  
         //设置文件下载头  
         response.addHeader("Content-Disposition", "attachment;filename=" + filename);    
