@@ -78,7 +78,18 @@ public class UserController {
         
         return model;
     }  
-   @RequestMapping("/zhuce")  
+    @RequestMapping("/newlogin")  
+    @ResponseBody
+    public boolean newlogin(@RequestBody User user){   
+    	boolean result = false;
+    	User localuser = this.userService.getUserByUserName(user.getUserName());
+        if(localuser!=null)
+        	if(localuser.getPassword().equals(user.getPassword()))
+        		result = true;
+        
+        return result;
+    } 
+    @RequestMapping("/zhuce")  
     public ModelAndView zhuce(@RequestParam("username")String username,@RequestParam("password")String password,@RequestParam("age") Integer age){   
 	   ModelAndView m = null;
         if(userService.newUser(username, password,age)==1){
@@ -89,9 +100,26 @@ public class UserController {
    @RequestMapping(value="/add",method=RequestMethod.POST)  
    @ResponseBody
    public int add(@RequestBody User user){ //@RequestBody 常用于解析json
-	   if(user.getUserName()!=null)
+	   int result = 0;
+	   if (!user.getUserName().equals("") && userService.getUserByUserName(user.getUserName())==null){
 		   userService.newUser(user);
-	   return user.getId();
+		   result = user.getId();
+	   }
+			 
+	   return result;
+  } 	
+   @RequestMapping(value="/isExist")  
+   @ResponseBody
+   public boolean isExist(String username){ 
+	   boolean result = true;
+	   try{
+		   userService.getUserByUserName(username).getId();
+		   result = true;
+	   }
+	   catch (Exception e){
+		   result = false;
+	   }
+	   return result;
   } 	
    @RequestMapping("/list")
    public ModelAndView listUser(UserList allUser,ModelAndView model){
