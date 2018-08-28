@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="test.dao.DeliveryMapper">
+  <resultMap id="BaseResultMap" type="test.entity.Delivery">
+    <id column="jhnm" jdbcType="VARCHAR" property="jhnm" />
+    <result column="jhbh" jdbcType="VARCHAR" property="jhbh" />
+    <result column="shr" jdbcType="VARCHAR" property="shr" />
+    <result column="shdz" jdbcType="VARCHAR" property="shdz" />
+    <result column="wlzz" jdbcType="VARCHAR" property="wlzz" />
+    <result column="jhjhrq" jdbcType="TIMESTAMP" property="jhjhrq" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    jhnm, jhbh, shr, shdz, wlzz, jhjhrq
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from delivery
+    where jhnm = #{jhnm,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByOrderId"  resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from delivery,order_delivery
+    where delivery.jhnm=order_delivery.did and order_delivery.sid = #{orderid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from delivery
+    where jhnm = #{jhnm,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="test.entity.Delivery">
+    insert into delivery (jhnm, jhbh, shr, 
+      shdz, wlzz, jhjhrq
+      )
+    values (#{jhnm,jdbcType=VARCHAR}, #{jhbh,jdbcType=VARCHAR}, #{shr,jdbcType=VARCHAR}, 
+      #{shdz,jdbcType=VARCHAR}, #{wlzz,jdbcType=VARCHAR}, #{jhjhrq,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="test.entity.Delivery">
+    insert into delivery
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="jhnm != null">
+        jhnm,
+      </if>
+      <if test="jhbh != null">
+        jhbh,
+      </if>
+      <if test="shr != null">
+        shr,
+      </if>
+      <if test="shdz != null">
+        shdz,
+      </if>
+      <if test="wlzz != null">
+        wlzz,
+      </if>
+      <if test="jhjhrq != null">
+        jhjhrq,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="jhnm != null">
+        #{jhnm,jdbcType=VARCHAR},
+      </if>
+      <if test="jhbh != null">
+        #{jhbh,jdbcType=VARCHAR},
+      </if>
+      <if test="shr != null">
+        #{shr,jdbcType=VARCHAR},
+      </if>
+      <if test="shdz != null">
+        #{shdz,jdbcType=VARCHAR},
+      </if>
+      <if test="wlzz != null">
+        #{wlzz,jdbcType=VARCHAR},
+      </if>
+      <if test="jhjhrq != null">
+        #{jhjhrq,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="test.entity.Delivery">
+    update delivery
+    <set>
+      <if test="jhbh != null">
+        jhbh = #{jhbh,jdbcType=VARCHAR},
+      </if>
+      <if test="shr != null">
+        shr = #{shr,jdbcType=VARCHAR},
+      </if>
+      <if test="shdz != null">
+        shdz = #{shdz,jdbcType=VARCHAR},
+      </if>
+      <if test="wlzz != null">
+        wlzz = #{wlzz,jdbcType=VARCHAR},
+      </if>
+      <if test="jhjhrq != null">
+        jhjhrq = #{jhjhrq,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where jhnm = #{jhnm,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="test.entity.Delivery">
+    update delivery
+    set jhbh = #{jhbh,jdbcType=VARCHAR},
+      shr = #{shr,jdbcType=VARCHAR},
+      shdz = #{shdz,jdbcType=VARCHAR},
+      wlzz = #{wlzz,jdbcType=VARCHAR},
+      jhjhrq = #{jhjhrq,jdbcType=TIMESTAMP}
+    where jhnm = #{jhnm,jdbcType=VARCHAR}
+  </update>
+</mapper>
