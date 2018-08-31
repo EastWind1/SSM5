@@ -28,12 +28,22 @@
     delete from delivery
     where jhnm = #{jhnm,jdbcType=VARCHAR}
   </delete>
+  <delete id="deleteByOrder" parameterType="java.lang.String">
+    delete from delivery
+    where jhnm in (select did from order_delivery where sid = #{sid,jdbcType=VARCHAR})
+  </delete>
   <insert id="insert" parameterType="test.entity.Delivery">
     insert into delivery (jhnm, jhbh, shr, 
       shdz, wlzz, jhjhrq
       )
     values (#{jhnm,jdbcType=VARCHAR}, #{jhbh,jdbcType=VARCHAR}, #{shr,jdbcType=VARCHAR}, 
       #{shdz,jdbcType=VARCHAR}, #{wlzz,jdbcType=VARCHAR}, #{jhjhrq,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertToLink">
+    insert into order_delivery (sid, did
+      )
+    values (#{sid,jdbcType=VARCHAR}, #{did,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="test.entity.Delivery">

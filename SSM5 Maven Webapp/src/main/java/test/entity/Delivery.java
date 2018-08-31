@@ -1,7 +1,5 @@
 package test.entity;
 
-import java.util.Date;
-
 import org.springframework.format.annotation.DateTimeFormat;
 
 public class Delivery {

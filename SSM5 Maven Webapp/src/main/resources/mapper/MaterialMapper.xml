@@ -28,11 +28,21 @@
     delete from material
     where wlnm = #{wlnm,jdbcType=VARCHAR}
   </delete>
+  <delete id="deleteByOrder" parameterType="java.lang.String">
+    delete from material
+    where wlnm in (select mid from order_material where sid = #{sid,jdbcType=VARCHAR})
+  </delete>
   <insert id="insert" parameterType="test.entity.Material">
     insert into material (wlnm, wlbh, wlmc, 
       zsl, zdw, zdj)
     values (#{wlnm,jdbcType=VARCHAR}, #{wlbh,jdbcType=VARCHAR}, #{wlmc,jdbcType=VARCHAR}, 
       #{zsl,jdbcType=DECIMAL}, #{zdw,jdbcType=VARCHAR}, #{zdj,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertToLink">
+    insert into order_material (sid, mid
+      )
+    values (#{sid,jdbcType=VARCHAR}, #{mid,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="test.entity.Material">
     insert into material

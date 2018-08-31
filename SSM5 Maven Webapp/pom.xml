@@ -170,13 +170,13 @@
 			<artifactId>mybatis-spring</artifactId>
 			<version>${mybatis-spring.version}</version>
 		</dependency>
-		
+
 		<dependency>
-		    <groupId>mysql</groupId>
-		    <artifactId>mysql-connector-java</artifactId>
-		    <version>8.0.11</version>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>8.0.11</version>
 		</dependency>
-		
+
 		<!-- ================================================= apache ================================================== -->
 		<dependency>
 			<groupId>org.apache.commons</groupId>
@@ -208,18 +208,19 @@
 			<artifactId>poi-ooxml</artifactId>
 			<version>${apahe-poi.version}</version>
 		</dependency>
-		
-		<!-- ================================================= joda datetime处理 ================================================== -->
+
+		<!-- ================================================= joda datetime处理 
+			================================================== -->
 		<dependency>
-		    <groupId>joda-time</groupId>
-		    <artifactId>joda-time</artifactId>
-		    <version>${joda.version}</version>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>
+			<version>${joda.version}</version>
 		</dependency>
 
 	</dependencies>
 
 	<build>
-		<finalName>ssm</finalName>
+		<finalName>SSM5</finalName>
 		<resources>
 			<resource>
 				<directory>src/main/java</directory>
@@ -229,5 +230,15 @@
 				<filtering>true</filtering>
 			</resource>
 		</resources>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+		</plugins>
 	</build>
 </project>

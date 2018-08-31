@@ -1,4 +1,6 @@
 package test.controller;
+
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -11,7 +13,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import test.dao.DeliveryMapper;
+import test.dao.MaterialMapper;
 import test.dao.SaleOrderMapper;
+import test.entity.Delivery;
+import test.entity.Material;
 import test.entity.SaleOrder;
 
 @Controller
@@ -19,6 +25,10 @@ import test.entity.SaleOrder;
 public class SaleOrderColtroller {
 	@Autowired
 	private SaleOrderMapper saleOrderMapper;
+	@Autowired
+	private MaterialMapper materialMapper;
+	@Autowired
+	private DeliveryMapper deliveryMapper;
 	
 	@RequestMapping("list")
 	@ResponseBody
@@ -54,10 +64,51 @@ public class SaleOrderColtroller {
 	
 	@RequestMapping("delete")
 	@ResponseBody
-	@Transactional
+	@Transactional(rollbackFor=Exception.class)
 	public void remove(@RequestBody String[] ids){
 		for(String id : ids){
+			SaleOrder saleOrder = saleOrderMapper.selectByPrimaryKey(id);
+			for(Material material:saleOrder.getWl()){
+				materialMapper.deleteByPrimaryKey(material.getWlnm());
+			}
+			for(Delivery delivery:saleOrder.getJh()){
+				deliveryMapper.deleteByPrimaryKey(delivery.getJhnm());
+			}
 			saleOrderMapper.deleteByPrimaryKey(id);
 		}
+	}
+	@RequestMapping("save")
+	@ResponseBody
+	@Transactional(rollbackFor=Exception.class)
+	public boolean save(@RequestBody SaleOrder saleOrder){
+		boolean result =false;
+		
+		try{
+			materialMapper.deleteByOrder(saleOrder.getDdnm());
+			deliveryMapper.deleteByOrder(saleOrder.getDdnm());
+			saleOrderMapper.deleteByPrimaryKey(saleOrder.getDdnm());
+			
+			saleOrderMapper.insertSelective(saleOrder);
+			BigDecimal totalAmount = BigDecimal.ZERO;
+			for(Material material:saleOrder.getWl()){
+				materialMapper.insert(material);
+				materialMapper.insertToLink(saleOrder.getDdnm(), material.getWlnm());
+				totalAmount = totalAmount.add(material.getZdj().multiply(material.getZsl()));
+			}
+			
+			saleOrder.setZje(totalAmount);
+			saleOrderMapper.updateByPrimaryKeySelective(saleOrder);
+			
+			for(Delivery delivery:saleOrder.getJh()){
+				deliveryMapper.insert(delivery);
+				deliveryMapper.insertToLink(saleOrder.getDdnm(), delivery.getJhnm());
+			}
+			
+			result = true;
+		} catch (Exception e) {
+			throw e;
+		}
+		
+		return result;
 	}
 }
