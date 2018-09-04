@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="test.dao.LinterestMapper">
+  <resultMap id="BaseResultMap" type="test.entity.Linterest">
+    <id column="l_id" jdbcType="INTEGER" property="lId" />
+    <result column="l_name" jdbcType="VARCHAR" property="lName" />
+    <result column="l_mitime" jdbcType="INTEGER" property="lMitime" />
+    <result column="l_matime" jdbcType="INTEGER" property="lMatime" />
+    <result column="l_tunit" jdbcType="VARCHAR" property="lTunit" />
+    <result column="l_rate" jdbcType="DECIMAL" property="lRate" />
+    <result column="l_stime" jdbcType="DATE" property="lStime" />
+    <result column="l_state" jdbcType="VARCHAR" property="lState" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    l_id, l_name, l_mitime, l_matime, l_tunit, l_rate, l_stime, l_state
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from linterest
+    where l_id = #{lId,jdbcType=INTEGER}
+  </select>
+    <select id="list" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from linterest
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from linterest
+    where l_id = #{lId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="test.entity.Linterest">
+    insert into linterest (l_id, l_name, l_mitime, 
+      l_matime, l_tunit, l_rate, 
+      l_stime, l_state)
+    values (#{lId,jdbcType=INTEGER}, #{lName,jdbcType=VARCHAR}, #{lMitime,jdbcType=INTEGER}, 
+      #{lMatime,jdbcType=INTEGER}, #{lTunit,jdbcType=VARCHAR}, #{lRate,jdbcType=DECIMAL}, 
+      #{lStime,jdbcType=DATE}, #{lState,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="test.entity.Linterest" useGeneratedKeys="true" keyProperty="lId">
+    insert into linterest
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="lId != null">
+        l_id,
+      </if>
+      <if test="lName != null">
+        l_name,
+      </if>
+      <if test="lMitime != null">
+        l_mitime,
+      </if>
+      <if test="lMatime != null">
+        l_matime,
+      </if>
+      <if test="lTunit != null">
+        l_tunit,
+      </if>
+      <if test="lRate != null">
+        l_rate,
+      </if>
+      <if test="lStime != null">
+        l_stime,
+      </if>
+      <if test="lState != null">
+        l_state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="lId != null">
+        #{lId,jdbcType=INTEGER},
+      </if>
+      <if test="lName != null">
+        #{lName,jdbcType=VARCHAR},
+      </if>
+      <if test="lMitime != null">
+        #{lMitime,jdbcType=INTEGER},
+      </if>
+      <if test="lMatime != null">
+        #{lMatime,jdbcType=INTEGER},
+      </if>
+      <if test="lTunit != null">
+        #{lTunit,jdbcType=VARCHAR},
+      </if>
+      <if test="lRate != null">
+        #{lRate,jdbcType=DECIMAL},
+      </if>
+      <if test="lStime != null">
+        #{lStime,jdbcType=DATE},
+      </if>
+      <if test="lState != null">
+        #{lState,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="test.entity.Linterest">
+    update linterest
+    <set>
+      <if test="lName != null">
+        l_name = #{lName,jdbcType=VARCHAR},
+      </if>
+      <if test="lMitime != null">
+        l_mitime = #{lMitime,jdbcType=INTEGER},
+      </if>
+      <if test="lMatime != null">
+        l_matime = #{lMatime,jdbcType=INTEGER},
+      </if>
+      <if test="lTunit != null">
+        l_tunit = #{lTunit,jdbcType=VARCHAR},
+      </if>
+      <if test="lRate != null">
+        l_rate = #{lRate,jdbcType=DECIMAL},
+      </if>
+      <if test="lStime != null">
+        l_stime = #{lStime,jdbcType=DATE},
+      </if>
+      <if test="lState != null">
+        l_state = #{lState,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where l_id = #{lId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="test.entity.Linterest">
+    update linterest
+    set l_name = #{lName,jdbcType=VARCHAR},
+      l_mitime = #{lMitime,jdbcType=INTEGER},
+      l_matime = #{lMatime,jdbcType=INTEGER},
+      l_tunit = #{lTunit,jdbcType=VARCHAR},
+      l_rate = #{lRate,jdbcType=DECIMAL},
+      l_stime = #{lStime,jdbcType=DATE},
+      l_state = #{lState,jdbcType=VARCHAR}
+    where l_id = #{lId,jdbcType=INTEGER}
+  </update>
+</mapper>

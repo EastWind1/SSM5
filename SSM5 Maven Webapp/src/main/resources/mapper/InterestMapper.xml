@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="test.dao.InterestMapper">
+  <resultMap id="BaseResultMap" type="test.entity.Interest">
+    <id column="i_id" jdbcType="INTEGER" property="iId" />
+    <result column="i_name" jdbcType="VARCHAR" property="iName" />
+    <result column="i_way" jdbcType="VARCHAR" property="iWay" />
+    <result column="i_rate" jdbcType="DECIMAL" property="iRate" />
+    <result column="i_tunit" jdbcType="VARCHAR" property="iTunit" />
+    <result column="i_stime" jdbcType="INTEGER" property="iStime" />
+    <result column="i_btime" jdbcType="DATE" property="iBtime" />
+    <result column="i_state" jdbcType="VARCHAR" property="iState" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    i_id, i_name, i_way, i_rate, i_tunit, i_stime, i_btime, i_state
+  </sql>
+   <sql id="Detail_Column_List">
+    i_name, i_way, i_rate, i_tunit, i_stime, i_btime, i_state
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from interest
+    where i_id = #{iId,jdbcType=INTEGER}
+  </select>
+  <select id="selectByBankId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select interest.i_id,
+    <include refid="Detail_Column_List" />
+    from bank_interest left join interest on interest.i_id = bank_interest.i_id
+    where b_id = #{bId,jdbcType=INTEGER}
+  </select>
+   <select id="list"  resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from interest where i_way = '贷款'
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from interest
+    where i_id = #{iId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="test.entity.Interest">
+    insert into interest (i_id, i_name, i_way, 
+      i_rate, i_tunit, i_stime, 
+      i_btime, 
+      i_state)
+    values (#{iId,jdbcType=INTEGER}, #{iName,jdbcType=VARCHAR}, #{iWay,jdbcType=VARCHAR}, 
+      #{iRate,jdbcType=DECIMAL}, #{iTunit,jdbcType=VARCHAR}, #{iStime,jdbcType=INTEGER}, 
+      #{iBtime,jdbcType=DATE}, 
+      #{iState,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertToLink">
+    insert into bank_interest (b_id,i_id)
+    values (#{bId,jdbcType=INTEGER},#{iId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="test.entity.Interest" useGeneratedKeys="true" keyProperty="iId">
+    insert into interest
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="iId != null">
+        i_id,
+      </if>
+      <if test="iName != null">
+        i_name,
+      </if>
+      <if test="iWay != null">
+        i_way,
+      </if>
+      <if test="iRate != null">
+        i_rate,
+      </if>
+      <if test="iTunit != null">
+        i_tunit,
+      </if>
+      <if test="iStime != null">
+        i_stime,
+      </if>
+      <if test="iBtime != null">
+        i_btime,
+      </if>
+      <if test="iState != null">
+        i_state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="iId != null">
+        #{iId,jdbcType=INTEGER},
+      </if>
+      <if test="iName != null">
+        #{iName,jdbcType=VARCHAR},
+      </if>
+      <if test="iWay != null">
+        #{iWay,jdbcType=VARCHAR},
+      </if>
+      <if test="iRate != null">
+        #{iRate,jdbcType=DECIMAL},
+      </if>
+      <if test="iTunit != null">
+        #{iTunit,jdbcType=VARCHAR},
+      </if>
+      <if test="iStime != null">
+        #{iStime,jdbcType=INTEGER},
+      </if>
+      <if test="iBtime != null">
+        #{iBtime,jdbcType=DATE},
+      </if>
+      <if test="iState != null">
+        #{iState,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="test.entity.Interest">
+    update interest
+    <set>
+      <if test="iName != null">
+        i_name = #{iName,jdbcType=VARCHAR},
+      </if>
+      <if test="iWay != null">
+        i_way = #{iWay,jdbcType=VARCHAR},
+      </if>
+      <if test="iRate != null">
+        i_rate = #{iRate,jdbcType=DECIMAL},
+      </if>
+      <if test="iTunit != null">
+        i_tunit = #{iTunit,jdbcType=VARCHAR},
+      </if>
+      <if test="iStime != null">
+        i_stime = #{iStime,jdbcType=INTEGER},
+      </if>
+      <if test="iBtime != null">
+        i_btime = #{iBtime,jdbcType=DATE},
+      </if>
+      <if test="iState != null">
+        i_state = #{iState,jdbcType=INTEGER},
+      </if>
+    </set>
+    where i_id = #{iId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="test.entity.Interest">
+    update interest
+    set i_name = #{iName,jdbcType=VARCHAR},
+      i_way = #{iWay,jdbcType=VARCHAR},
+      i_rate = #{iRate,jdbcType=DECIMAL},
+      i_tunit = #{iTunit,jdbcType=VARCHAR},
+      i_stime = #{iStime,jdbcType=INTEGER},
+      i_btime = #{iBtime,jdbcType=DATE},
+      i_state = #{iState,jdbcType=INTEGER}
+    where i_id = #{iId,jdbcType=INTEGER}
+  </update>
+</mapper>
