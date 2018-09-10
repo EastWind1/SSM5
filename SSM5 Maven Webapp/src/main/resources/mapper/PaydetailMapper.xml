@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="test.dao.PaydetailMapper">
+	<resultMap id="BaseResultMap" type="test.entity.Paydetail">
+		<id column="id" jdbcType="VARCHAR" property="id" />
+		<result column="runit" jdbcType="VARCHAR" property="runit" />
+		<result column="way" jdbcType="VARCHAR" property="way" />
+		<result column="account" jdbcType="VARCHAR" property="account" />
+		<result column="anumber" jdbcType="DECIMAL" property="anumber" />
+		<result column="pnumber" jdbcType="DECIMAL" property="pnumber" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, runit, way, account, anumber, pnumber
+	</sql>
+	<select id="selectByPrimaryKey" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from paydetail
+		where id = #{id,jdbcType=VARCHAR}
+	</select>
+	<select id="selectByPayId" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from paydetail
+		where id in (select did from pay_detail where pid =
+		#{pid,jdbcType=VARCHAR})
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from paydetail
+		where id = #{id,jdbcType=VARCHAR}
+	</delete>
+	<delete id="deleteByPayId" parameterType="java.lang.String">
+		delete from paydetail
+		where id in (select did from pay_detail where pid =
+		#{pid,jdbcType=VARCHAR})
+	</delete>
+	<insert id="insert" parameterType="test.entity.Paydetail">
+		insert into paydetail (id, runit, way,
+		account, anumber, pnumber
+		)
+		values (#{id,jdbcType=VARCHAR}, #{runit,jdbcType=VARCHAR},
+		#{way,jdbcType=VARCHAR},
+		#{account,jdbcType=VARCHAR}, #{anumber,jdbcType=DECIMAL}, #{pnumber,jdbcType=DECIMAL}
+		)
+	</insert>
+	<insert id="insertToLink" parameterType="test.entity.Paydetail">
+		insert into pay_detail (pid, did
+		)
+		values (#{pid,jdbcType=VARCHAR},#{did,jdbcType=VARCHAR}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="test.entity.Paydetail">
+		insert into paydetail
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="runit != null">
+				runit,
+			</if>
+			<if test="way != null">
+				way,
+			</if>
+			<if test="account != null">
+				account,
+			</if>
+			<if test="anumber != null">
+				anumber,
+			</if>
+			<if test="pnumber != null">
+				pnumber,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="runit != null">
+				#{runit,jdbcType=VARCHAR},
+			</if>
+			<if test="way != null">
+				#{way,jdbcType=VARCHAR},
+			</if>
+			<if test="account != null">
+				#{account,jdbcType=VARCHAR},
+			</if>
+			<if test="anumber != null">
+				#{anumber,jdbcType=DECIMAL},
+			</if>
+			<if test="pnumber != null">
+				#{pnumber,jdbcType=DECIMAL},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="test.entity.Paydetail">
+		update paydetail
+		<set>
+			<if test="runit != null">
+				runit = #{runit,jdbcType=VARCHAR},
+			</if>
+			<if test="way != null">
+				way = #{way,jdbcType=VARCHAR},
+			</if>
+			<if test="account != null">
+				account = #{account,jdbcType=VARCHAR},
+			</if>
+			<if test="anumber != null">
+				anumber = #{anumber,jdbcType=DECIMAL},
+			</if>
+			<if test="pnumber != null">
+				pnumber = #{pnumber,jdbcType=DECIMAL},
+			</if>
+		</set>
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="test.entity.Paydetail">
+		update paydetail
+		set runit = #{runit,jdbcType=VARCHAR},
+		way = #{way,jdbcType=VARCHAR},
+		account = #{account,jdbcType=VARCHAR},
+		anumber = #{anumber,jdbcType=DECIMAL},
+		pnumber = #{pnumber,jdbcType=DECIMAL}
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+</mapper>

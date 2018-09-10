@@ -1,7 +1,6 @@
 package test.entity;
 
 import java.math.BigDecimal;
-import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
