@@ -17,16 +17,13 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {  
     @Resource  
     private UserDao userDao;  
-    public User getUserById(int userId) {  
-        // TODO Auto-generated method stub  
+    public User getUserById(int userId) {
         return this.userDao.selectByPrimaryKey(userId);  
     }
 	public User getUserByUserName(String userName) {
-		// TODO Auto-generated method stub
 		return this.userDao.selectByUserName(userName);
 	}
 	public int newUser(String userName, String password,Integer age) {
-		// TODO Auto-generated method stub
 		User user = new User();
 		user.setUserName(userName);
 		user.setPassword(password);
@@ -34,12 +31,10 @@ public class UserServiceImpl implements UserService {
 		return this.userDao.insert(user);
 	}
 	public List<User> list() {
-		// TODO Auto-generated method stub
 		return this.userDao.selectList();
 	}
 	
 	public int newUser(User user) {
-		// TODO Auto-generated method stub
 		return this.userDao.insert(user);
 	}
   

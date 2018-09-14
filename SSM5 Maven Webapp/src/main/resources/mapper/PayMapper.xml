@@ -26,7 +26,7 @@
     <result column="applicant" jdbcType="VARCHAR" property="applicant" />
     <result column="atime" jdbcType="DATE" property="atime" />
     <result column="state" jdbcType="VARCHAR" property="state" />
-    <collection property="paydetails" column="id" select="test.dao.PaydetailMapper.selectByPayId"></collection>
+    <collection property="paydetails" column="id" select="test.dao.PaydetailMapper.selectByPayId"/>
   </resultMap>
   <sql id="Base_Column_List">
     id, unit, depart, etime, eway, currency, number, note, applicant, atime, state

@@ -16,8 +16,8 @@
     <result column="khmc" jdbcType="VARCHAR" property="khmc" />
     <result column="zje" jdbcType="DECIMAL" property="zje" />
     <result column="khdh" jdbcType="VARCHAR" property="khdh" />
-    <collection property="jh" column="ddnm" select="test.dao.DeliveryMapper.selectByOrderId"></collection>
-    <collection property="wl" column="ddnm" select="test.dao.MaterialMapper.selectByOrderId"></collection>
+    <collection property="jh" column="ddnm" select="test.dao.DeliveryMapper.selectByOrderId"/>
+    <collection property="wl" column="ddnm" select="test.dao.MaterialMapper.selectByOrderId"/>
   </resultMap>
   <sql id="Base_Column_List">
     ddnm, ddbh, ywrq, khmc, zje, khdh

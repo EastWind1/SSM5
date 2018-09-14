@@ -8,7 +8,7 @@
   <resultMap id="DetailResultMap" type="test.entity.Bank">
     <id column="b_id" jdbcType="INTEGER" property="bId" />
     <result column="b_name" jdbcType="VARCHAR" property="bName" />
-    <collection property="interest" column="b_id" select="test.dao.InterestMapper.selectByBankId"></collection>
+    <collection property="interest" column="b_id" select="test.dao.InterestMapper.selectByBankId"/>
   </resultMap>
   <sql id="Base_Column_List">
     b_id, b_name

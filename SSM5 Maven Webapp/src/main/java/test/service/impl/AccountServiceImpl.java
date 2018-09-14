@@ -15,20 +15,17 @@ public class AccountServiceImpl implements AccountService {
 	private AccountMapper accountMapper;
 	@Override
 	public List<Account> getAccounts() {
-		// TODO Auto-generated method stub
 		return accountMapper.selectAccounts();
 	}
 
 	@Override
 	public boolean audit(Account account) {
-		// TODO Auto-generated method stub
 		accountMapper.updateByPrimaryKeySelective(account);
 		return true;
 	}
 
 	@Override
 	public boolean addAccount(Account account) {
-		// TODO Auto-generated method stub
 		accountMapper.insert(account);
 		return true;
 	}

@@ -36,7 +36,7 @@ public class PayController {
 		return payMapper.selectByPrimaryKey(id);
 	}
 
-	@RequestMapping(value = "save", method = RequestMethod.POST)
+	@RequestMapping(value = "", method = RequestMethod.POST)
 	@ResponseBody
 	@Transactional
 	public void save(@RequestBody Pay pay) {

@@ -33,7 +33,7 @@
 		<result column="audit" jdbcType="VARCHAR" property="audit" />
 		<result column="audate" jdbcType="DATE" property="audate" />
 		<collection property="caccounts" column="id"
-			select="test.dao.CaccountMapper.selectByParentId"></collection>
+			select="test.dao.CaccountMapper.selectByParentId"/>
 	</resultMap>
 	<sql id="Base_Column_List">
 		id, name, number,odate, type, currency, bank, agroup, unit, applicant,
