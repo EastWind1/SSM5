@@ -226,6 +226,7 @@
 				<directory>src/main/resources</directory>
 				<includes>
 					<include>**/*.xml</include>
+					<include>**/*.properties</include>
 				</includes>
 				<filtering>true</filtering>
 			</resource>
@@ -237,6 +238,14 @@
 				<configuration>
 					<source>1.8</source>
 					<target>1.8</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.6</version>
+				<configuration>
+					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
 		</plugins>
