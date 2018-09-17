@@ -3,22 +3,22 @@ package test.entity;
 import java.math.BigDecimal;
 
 public class Caccount {
-    private String id;
+    private String cid;
 
     private String pid;
 
-    private String name;
+    private String cname;
 
-    private String currency;
+    private String ccurrency;
 
-    private BigDecimal number;
+    private BigDecimal cnumber;
 
-    public String getId() {
-        return id;
+    public String getCid() {
+        return cid;
     }
 
-    public void setId(String id) {
-        this.id = id == null ? null : id.trim();
+    public void setCid(String cid) {
+        this.cid = cid == null ? null : cid.trim();
     }
 
     public String getPid() {
@@ -29,27 +29,27 @@ public class Caccount {
         this.pid = pid == null ? null : pid.trim();
     }
 
-    public String getName() {
-        return name;
+    public String getCname() {
+        return cname;
     }
 
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
+    public void setCname(String cname) {
+        this.cname = cname == null ? null : cname.trim();
     }
 
-    public String getCurrency() {
-        return currency;
+    public String getCcurrency() {
+        return ccurrency;
     }
 
-    public void setCurrency(String currency) {
-        this.currency = currency == null ? null : currency.trim();
+    public void setCcurrency(String ccurrency) {
+        this.ccurrency = ccurrency == null ? null : ccurrency.trim();
     }
 
-    public BigDecimal getNumber() {
-        return number;
+    public BigDecimal getCnumber() {
+        return cnumber;
     }
 
-    public void setNumber(BigDecimal number) {
-        this.number = number;
+    public void setCnumber(BigDecimal cnumber) {
+        this.cnumber = cnumber;
     }
 }
