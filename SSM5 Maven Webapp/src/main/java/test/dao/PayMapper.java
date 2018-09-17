@@ -1,13 +1,15 @@
 package test.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
+import org.springframework.lang.Nullable;
 import test.entity.Pay;
 
 public interface PayMapper {
     int deleteByPrimaryKey(String id);
     
-    List<Pay> list();
+    List<Pay> list(HashMap params);
 
     int insert(Pay record);
 

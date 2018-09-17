@@ -25,65 +25,65 @@ import test.service.UserService;
 @Controller
 @RequestMapping("/data")
 public class DataController {
-	@Autowired
-	private UserService userService;
-	@RequestMapping("ajax")
-	@ResponseBody
-	public List<User> getUsers(){
-		List<User> users = userService.list();
-		return users;
-	}
-	
-	/**  
-     * ÎÄ¼şÉÏ´«¹¦ÄÜ  
-     * @param file  
-     * @return  
-     * @throws IOException   
-     */  
-    @RequestMapping(value="/upload",method=RequestMethod.POST)  
-    @ResponseBody  
-    public String upload(MultipartFile file,HttpServletRequest request) throws IOException{  
-        String path = request.getSession().getServletContext().getRealPath("upload");  
-        String fileName = file.getOriginalFilename();    
-        File dir = new File(path,fileName);          
-        if(!dir.exists()){  
-            dir.createNewFile();  
-        }  
-        //MultipartFile×Ô´øµÄ½âÎö·½·¨ 
+    @Autowired
+    private UserService userService;
+    @RequestMapping("ajax")
+    @ResponseBody
+    public List<User> getUsers(){
+        List<User> users = userService.list();
+        return users;
+    }
+
+    /**
+     * æ–‡ä»¶ä¸Šä¼ åŠŸèƒ½
+     * @param file
+     * @return
+     * @throws IOException
+     */
+    @RequestMapping(value="/upload",method=RequestMethod.POST)
+    @ResponseBody
+    public String upload(MultipartFile file,HttpServletRequest request) throws IOException{
+        String path = request.getSession().getServletContext().getRealPath("upload");
+        String fileName = file.getOriginalFilename();
+        File dir = new File(path,fileName);
+        if(!dir.exists()){
+            dir.createNewFile();
+        }
+        //MultipartFileè‡ªå¸¦çš„è§£ææ–¹æ³•
         try{
-        	file.transferTo(dir);  
+            file.transferTo(dir);
         }
         catch(IOException e){
-        	
+
         }
         return "ok!";
-    }  
-      
-    /**  
-     * ÎÄ¼şÏÂÔØ¹¦ÄÜ  
-     * @param request  
-     * @param response  
-     * @throws Exception  
-     */  
-    @RequestMapping("/down")  
-    public void down(HttpServletRequest request,HttpServletResponse response,String filename) throws Exception{  
-        //Ä£ÄâÎÄ¼ş£¬myfile.txtÎªĞèÒªÏÂÔØµÄÎÄ¼ş  
-        String url = request.getSession().getServletContext().getRealPath("upload")+"\\"+filename;  
-        //»ñÈ¡ÊäÈëÁ÷  
-        InputStream bis = new BufferedInputStream(new FileInputStream(new File(url)));  
-        //¼ÙÈçÒÔÖĞÎÄÃûÏÂÔØµÄ»°   
-        filename = URLEncoder.encode(filename,"UTF-8");  
-        //ÉèÖÃÎÄ¼şÏÂÔØÍ·  
-        response.addHeader("Content-Disposition", "attachment;filename=" + filename);    
-        //1.ÉèÖÃÎÄ¼şContentTypeÀàĞÍ£¬ÕâÑùÉèÖÃ£¬»á×Ô¶¯ÅĞ¶ÏÏÂÔØÎÄ¼şÀàĞÍ    
-        response.setContentType("multipart/form-data");   
-        BufferedOutputStream out = new BufferedOutputStream(response.getOutputStream());  
-        int len = 0;  
-        while((len = bis.read()) != -1){  
-            out.write(len);  
-            out.flush();  
-        }  
+    }
+
+    /**
+     * æ–‡ä»¶ä¸‹è½½åŠŸèƒ½
+     * @param request
+     * @param response
+     * @throws Exception
+     */
+    @RequestMapping("/down")
+    public void down(HttpServletRequest request,HttpServletResponse response,String filename) throws Exception{
+        //æ¨¡æ‹Ÿæ–‡ä»¶ï¼Œmyfile.txtä¸ºéœ€è¦ä¸‹è½½çš„æ–‡ä»¶
+        String url = request.getSession().getServletContext().getRealPath("upload")+"\\"+filename;
+        //è·å–è¾“å…¥æµ
+        InputStream bis = new BufferedInputStream(new FileInputStream(new File(url)));
+        //å‡å¦‚ä»¥ä¸­æ–‡åä¸‹è½½çš„è¯
+        filename = URLEncoder.encode(filename,"UTF-8");
+        //è®¾ç½®æ–‡ä»¶ä¸‹è½½å¤´
+        response.addHeader("Content-Disposition", "attachment;filename=" + filename);
+        //1.è®¾ç½®æ–‡ä»¶ContentTypeç±»å‹ï¼Œè¿™æ ·è®¾ç½®ï¼Œä¼šè‡ªåŠ¨åˆ¤æ–­ä¸‹è½½æ–‡ä»¶ç±»å‹
+        response.setContentType("multipart/form-data");
+        BufferedOutputStream out = new BufferedOutputStream(response.getOutputStream());
+        int len = 0;
+        while((len = bis.read()) != -1){
+            out.write(len);
+            out.flush();
+        }
         bis.close();
-        out.close();  
-    }  
+        out.close();
+    }
 }

@@ -37,10 +37,13 @@
     from pay
     where id = #{id,jdbcType=VARCHAR}
   </select>
-  <select id="list" parameterType="java.lang.String" resultMap="BaseResultMap">
+  <select id="list" parameterType="hashMap" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from pay
+    <if test="begin != null and end != null">
+    where atime between #{begin,jdbcType=DATE} and #{end,jdbcType=DATE}
+    </if>
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from pay

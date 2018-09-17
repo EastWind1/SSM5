@@ -1,7 +1,7 @@
 package test.controller;
 
 
-import javax.annotation.Resource;  
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
@@ -15,119 +15,119 @@ import org.springframework.web.servlet.ModelAndView;
 import test.entity.User;
 import test.entity.UserList;
 import test.service.UserService;
-  
-  
-@Controller  
-@RequestMapping("/user")  
-public class UserController {  
-    @Resource 	
-    private UserService userService;  
-      
-    @RequestMapping("/showUser")  
-    public ModelAndView toIndex(HttpServletRequest request,ModelAndView model){  
-        int userId = Integer.parseInt(request.getParameter("id"));  
-        User user = this.userService.getUserById(userId);  
+
+
+@Controller
+@RequestMapping("/user")
+public class UserController {
+    @Resource
+    private UserService userService;
+
+    @RequestMapping("/showUser")
+    public ModelAndView toIndex(HttpServletRequest request,ModelAndView model){
+        int userId = Integer.parseInt(request.getParameter("id"));
+        User user = this.userService.getUserById(userId);
         model = new ModelAndView("showUser","user",user);
-        /* »òĞ´Îª
-       	 * model = new ModelAndView("showUser");
-       	 * model.addObject("user",user);
-       	 * 
-       	 * »òÕß
-       	 * model = new ModelAndView();
-       	 * model.setViewName("showUser");
-       	 * model.addObject("user",user);
-       	 */
+        /* æˆ–å†™ä¸º
+         * model = new ModelAndView("showUser");
+         * model.addObject("user",user);
+         *
+         * æˆ–è€…
+         * model = new ModelAndView();
+         * model.setViewName("showUser");
+         * model.addObject("user",user);
+         */
         return model;
         /*
-         * ´Ë´¦¿É²ÉÓÃ¶àÖÖ·½Ê½ÊµÏÖÌø×ªÓë´«Öµ
-         * ×¢£ºÖØ¶¨Ïò·¢ÉúÔÚ¿Í»§¶Ë£¬±íÊ¾È¥·ÃÎÊÁíÒ»¸öµØÖ·£»×ª·¢±íÊ¾½«×ªÏòµØÖ·ÄÚÈİ´«ÊäÖÁµ±Ç°Î»ÖÃ
-         * 1¡¢ÖØ¶¨Ïò·½·¨
+         * æ­¤å¤„å¯é‡‡ç”¨å¤šç§æ–¹å¼å®ç°è·³è½¬ä¸ä¼ å€¼
+         * æ³¨ï¼šé‡å®šå‘å‘ç”Ÿåœ¨å®¢æˆ·ç«¯ï¼Œè¡¨ç¤ºå»è®¿é—®å¦ä¸€ä¸ªåœ°å€ï¼›è½¬å‘è¡¨ç¤ºå°†è½¬å‘åœ°å€å†…å®¹ä¼ è¾“è‡³å½“å‰ä½ç½®
+         * 1ã€é‡å®šå‘æ–¹æ³•
          * public void toIndex(HttpServletRequest request)
          * ......
          * request.setAttribute("user", user);
          * request.getRequestDispatcher("showUser.jsp").forward(request, response);
-         * 2¡¢×ª·¢·½·¨
+         * 2ã€è½¬å‘æ–¹æ³•
          * public String toIndex(ModelMap modelMap){
          * ......
          * modelMap.addAttribute("user", user);
          * return "showUser";
-         * 3¡¢×ª·¢·½·¨
+         * 3ã€è½¬å‘æ–¹æ³•
          * public String toIndex(Model model){
          * ......
          * model.addAttribute("user", user);
          * return "showUser";
-         * 4¡¢ÖØ¶¨Ïò·½·¨
+         * 4ã€é‡å®šå‘æ–¹æ³•
          * public void down(HttpServletResponse response, ModelMap model)
-         * ¡£¡£¡£¡£¡£¡£
+         * ã€‚ã€‚ã€‚ã€‚ã€‚ã€‚
          * modelMap.addAttribute("user", user);
          * response.sendRedirect("error");
-         * 5¡¢×¢½âÊµÏÖ£¨´Ë×¢½âÈôÎ»ÓÚ·½·¨Ö®ÉÏ£¬±íÊ¾¿ØÖÆÆ÷Ä¬ÈÏ¼ÓÔØ¸Ã·½·¨£©
+         * 5ã€æ³¨è§£å®ç°ï¼ˆæ­¤æ³¨è§£è‹¥ä½äºæ–¹æ³•ä¹‹ä¸Šï¼Œè¡¨ç¤ºæ§åˆ¶å™¨é»˜è®¤åŠ è½½è¯¥æ–¹æ³•ï¼‰
          * public String toIndex(@ModelAttribute("user") User user){
          * ......
          * return "showUser";
-         * 
-         * ×¢£º·½·¨Í·°üº¬@ResponseBody±íÊ¾¸Ã·½·¨·µ»ØÖµ¼ÓÈëÖÁhttpÏìÓ¦ÖĞ£¬Èô·µ»ØÖµÎªString£¬Ôò²»»á±»½âÎöÎªÌø×ªÂ·¾¶£¬Ò»°ãÓÃÓÚAjaxÇëÇó·½·¨Ö®ÉÏ¡£
+         *
+         * æ³¨ï¼šæ–¹æ³•å¤´åŒ…å«@ResponseBodyè¡¨ç¤ºè¯¥æ–¹æ³•è¿”å›å€¼åŠ å…¥è‡³httpå“åº”ä¸­ï¼Œè‹¥è¿”å›å€¼ä¸ºStringï¼Œåˆ™ä¸ä¼šè¢«è§£æä¸ºè·³è½¬è·¯å¾„ï¼Œä¸€èˆ¬ç”¨äºAjaxè¯·æ±‚æ–¹æ³•ä¹‹ä¸Šã€‚
          */
-    }  
-    @RequestMapping("/login")  
-    public ModelAndView login(@RequestParam("username")String username,@RequestParam("password")String password,ModelAndView model){   
-    	User user = this.userService.getUserByUserName(username);
+    }
+    @RequestMapping("/login")
+    public ModelAndView login(@RequestParam("username")String username,@RequestParam("password")String password,ModelAndView model){
+        User user = this.userService.getUserByUserName(username);
         if(user!=null)
-        	if(user.getPassword().equals(password))
-        		model = new ModelAndView("showUser","user",user);
-        
-        return model;
-    }  
-    @RequestMapping("/newlogin")  
-    @ResponseBody
-    public boolean newlogin(@RequestBody User user){   
-    	boolean result = false;
-    	User localuser = this.userService.getUserByUserName(user.getUserName());
-        if(localuser!=null)
-        	if(localuser.getPassword().equals(user.getPassword()))
-        		result = true;
-        
-        return result;
-    } 
-    @RequestMapping("/zhuce")  
-    public ModelAndView zhuce(@RequestParam("username")String username,@RequestParam("password")String password,@RequestParam("age") Integer age){   
-	   ModelAndView m = null;
-        if(userService.newUser(username, password,age)==1){
-        	m = new ModelAndView("index");
-        }
-      return m;
-   } 	
-   @RequestMapping(value="/add",method=RequestMethod.POST)  
-   @ResponseBody
-   public int add(@RequestBody User user){ //@RequestBody ³£ÓÃÓÚ½âÎöjson
-	   int result = 0;
-	   if (!user.getUserName().equals("") && userService.getUserByUserName(user.getUserName())==null){
-		   userService.newUser(user);
-		   result = user.getId();
-	   }
-			 
-	   return result;
-  } 	
-   @RequestMapping(value="/isExist")  
-   @ResponseBody
-   public boolean isExist(String username){ 
-	   boolean result = true;
-	   try{
-		   userService.getUserByUserName(username).getId();
-		   result = true;
-	   }
-	   catch (Exception e){
-		   result = false;
-	   }
-	   return result;
-  } 	
-   @RequestMapping("/list")
-   public ModelAndView listUser(UserList allUser,ModelAndView model){
-	   allUser.setList(userService.list());
-	   model= new ModelAndView("List","UserList",allUser.getList());
-	   return model;
+            if(user.getPassword().equals(password))
+                model = new ModelAndView("showUser","user",user);
 
-	   
-   }
-    
-}  
+        return model;
+    }
+    @RequestMapping("/newlogin")
+    @ResponseBody
+    public boolean newlogin(@RequestBody User user){
+        boolean result = false;
+        User localuser = this.userService.getUserByUserName(user.getUserName());
+        if(localuser!=null)
+            if(localuser.getPassword().equals(user.getPassword()))
+                result = true;
+
+        return result;
+    }
+    @RequestMapping("/zhuce")
+    public ModelAndView zhuce(@RequestParam("username")String username,@RequestParam("password")String password,@RequestParam("age") Integer age){
+        ModelAndView m = null;
+        if(userService.newUser(username, password,age)==1){
+            m = new ModelAndView("index");
+        }
+        return m;
+    }
+    @RequestMapping(value="/add",method=RequestMethod.POST)
+    @ResponseBody
+    public int add(@RequestBody User user){ //@RequestBody å¸¸ç”¨äºè§£æjson
+        int result = 0;
+        if (!user.getUserName().equals("") && userService.getUserByUserName(user.getUserName())==null){
+            userService.newUser(user);
+            result = user.getId();
+        }
+
+        return result;
+    }
+    @RequestMapping(value="/isExist")
+    @ResponseBody
+    public boolean isExist(String username){
+        boolean result = true;
+        try{
+            userService.getUserByUserName(username).getId();
+            result = true;
+        }
+        catch (Exception e){
+            result = false;
+        }
+        return result;
+    }
+    @RequestMapping("/list")
+    public ModelAndView listUser(UserList allUser,ModelAndView model){
+        allUser.setList(userService.list());
+        model= new ModelAndView("List","UserList",allUser.getList());
+        return model;
+
+
+    }
+
+}
