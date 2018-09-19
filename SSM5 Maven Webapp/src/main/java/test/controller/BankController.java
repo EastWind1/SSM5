@@ -4,10 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import test.dao.BankMapper;
 import test.dao.InterestMapper;
@@ -26,7 +23,7 @@ public class BankController {
 	@Autowired
 	private LinterestMapper linterestMapper;
 	
-	@RequestMapping("list")
+	@RequestMapping(value="",method = RequestMethod.GET)
 	@ResponseBody
 	public List<Bank> list(){
 		return bankMapper.list();
@@ -45,15 +42,15 @@ public class BankController {
 		return interestMapper.selectByPrimaryKey(iId);
 	}
 	
-	@RequestMapping(value="interest",params="iId",method=RequestMethod.POST)
+	@RequestMapping(value="interest/{iId}",method=RequestMethod.PUT)
 	@ResponseBody
 	public int updateInterest(@RequestBody Interest interest){
 		return interestMapper.updateByPrimaryKeySelective(interest);
 	}
 	
-	@RequestMapping(value="interest",params="iId",method=RequestMethod.DELETE)
+	@RequestMapping(value="interest/{iId}",method=RequestMethod.DELETE)
 	@ResponseBody
-	public int deleteInterest(Integer iId){
+	public int deleteInterest(@PathVariable Integer iId){
 		return interestMapper.deleteByPrimaryKey(iId);
 	}
 	
@@ -70,13 +67,13 @@ public class BankController {
 	}
 	
 	
-	@RequestMapping(value="linterest",params="lId",method=RequestMethod.GET)
+	@RequestMapping(value="linterest/{lId}",method=RequestMethod.GET)
 	@ResponseBody
-	public Linterest getLinterest(Integer lId){
+	public Linterest getLinterest(@PathVariable Integer lId){
 		return linterestMapper.selectByPrimaryKey(lId);
 	}
 	
-	@RequestMapping(value="linterest",params="lId",method=RequestMethod.POST)
+	@RequestMapping(value="linterest/{lId}",method=RequestMethod.PUT)
 	@ResponseBody
 	public int updateLnterest(@RequestBody Linterest linterest){
 		return linterestMapper.updateByPrimaryKeySelective(linterest);

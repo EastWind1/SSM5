@@ -18,7 +18,7 @@ public class BaccountController {
 	private BaccountMapper baccountMapper;
 	@Autowired
 	private CaccountMapper caccountMapper;
-	
+
 	@RequestMapping(value="",method=RequestMethod.GET)
 	@ResponseBody
 	public List<Baccount> list(){
@@ -27,21 +27,16 @@ public class BaccountController {
 
 	@RequestMapping(value="",method=RequestMethod.POST)
 	@ResponseBody
-	public void save(@RequestBody Baccount baccount){
+	public int save(@RequestBody Baccount baccount){
 		if(baccountMapper.selectByPrimaryKey(baccount.getId())!=null){
+		    baccountMapper.deleteByPrimaryKey(baccount.getId());
 			baccountMapper.updateByPrimaryKey(baccount);
 		}
-		else{
-			baccountMapper.insert(baccount);
-		}
+		baccountMapper.insert(baccount);
 		for (Caccount caccount: baccount.getCaccounts()) {
-			if(caccountMapper.selectByPrimaryKey(caccount.getCid())!=null){
-				caccountMapper.updateByPrimaryKey(caccount);
-			}
-			else{
-				caccountMapper.insert(caccount);
-			}
+		    caccountMapper.insert(caccount);
 		}
+		return 1;
 	}
 	@RequestMapping(value="{id}",method=RequestMethod.DELETE)
 	@ResponseBody

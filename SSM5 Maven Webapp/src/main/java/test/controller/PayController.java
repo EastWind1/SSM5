@@ -46,7 +46,7 @@ public class PayController {
 	@RequestMapping(value = "", method = RequestMethod.POST)
 	@ResponseBody
 	@Transactional
-	public void save(@RequestBody Pay pay) {
+	public int save(@RequestBody Pay pay) {
 		if (pay.getId()!=null) {
 			paydetailMapper.deleteByPayId(pay.getId());
 			if (payMapper.selectByPrimaryKey(pay.getId()) != null)
@@ -58,5 +58,6 @@ public class PayController {
 				paydetailMapper.insertToLink(pay.getId(), paydetail.getId());
 			}
 		}
+		return 1;
 	}
 }
