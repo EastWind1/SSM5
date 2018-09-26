@@ -16,6 +16,8 @@
 		<result column="reason" jdbcType="VARCHAR" property="reason" />
 		<result column="audit" jdbcType="VARCHAR" property="audit" />
 		<result column="audate" jdbcType="DATE" property="audate" />
+		<result column="ismain" jdbcType="TINYINT" property="ismain" />
+		<result column="istemp" jdbcType="TINYINT" property="istemp" />
 	</resultMap>
 	<resultMap id="DetailResultMap" type="test.entity.Baccount">
 		<id column="id" jdbcType="VARCHAR" property="id" />
@@ -32,13 +34,15 @@
 		<result column="reason" jdbcType="VARCHAR" property="reason" />
 		<result column="audit" jdbcType="VARCHAR" property="audit" />
 		<result column="audate" jdbcType="DATE" property="audate" />
+		<result column="ismain" jdbcType="TINYINT" property="ismain" />
+		<result column="istemp" jdbcType="TINYINT" property="istemp" />
 		<collection property="caccounts" column="id"
 			select="test.dao.CaccountMapper.selectByParentId"/>
 	</resultMap>
 	<sql id="Base_Column_List">
 		id, name, number,odate, type, currency, bank, agroup, unit, applicant,
 		adate, reason, audit,
-		audate
+		audate, ismain, istemp
 	</sql>
 	<select id="selectByPrimaryKey" parameterType="java.lang.String"
 		resultMap="BaseResultMap">
@@ -61,14 +65,14 @@
 		odate, type, currency,
 		bank, agroup, unit,
 		applicant, adate, reason,
-		audit, audate)
+		audit, audate, ismain, istemp)
 		values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
 		#{number,jdbcType=VARCHAR},
 		#{odate,jdbcType=DATE}, #{type,jdbcType=VARCHAR}, #{currency,jdbcType=VARCHAR},
 		#{bank,jdbcType=VARCHAR}, #{agroup,jdbcType=VARCHAR},
 		#{unit,jdbcType=VARCHAR},
 		#{applicant,jdbcType=VARCHAR}, #{adate,jdbcType=DATE}, #{reason,jdbcType=VARCHAR},
-		#{audit,jdbcType=VARCHAR}, #{audate,jdbcType=DATE})
+		#{audit,jdbcType=VARCHAR}, #{audate,jdbcType=DATE}, #{ismain,jdbcType=TINYINT}, #{istemp,jdbcType=TINYINT})
 	</insert>
 	<insert id="insertSelective" parameterType="test.entity.Baccount">
 		insert into baccount
@@ -115,6 +119,12 @@
 			<if test="audate != null">
 				audate,
 			</if>
+			<if test="ismain != null">
+				ismain,
+			</if>
+			<if test="istemp != null">
+				istemp,
+			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="id != null">
@@ -158,6 +168,12 @@
 			</if>
 			<if test="audate != null">
 				#{audate,jdbcType=DATE},
+			</if>
+			<if test="ismain != null">
+				#{ismain,jdbcType=TINYINT},
+			</if>
+			<if test="istemp != null">
+				#{istemp,jdbcType=TINYINT},
 			</if>
 		</trim>
 	</insert>
@@ -203,6 +219,12 @@
 			<if test="audate != null">
 				audate = #{audate,jdbcType=DATE},
 			</if>
+			<if test="ismain != null">
+				ismain = #{ismain,jdbcType=TINYINT},
+			</if>
+			<if test="istemp != null">
+				istemp = #{istemp,jdbcType=TINYINT},
+			</if>
 		</set>
 		where id = #{id,jdbcType=VARCHAR}
 	</update>
@@ -220,7 +242,9 @@
 		adate = #{adate,jdbcType=DATE},
 		reason = #{reason,jdbcType=VARCHAR},
 		audit = #{audit,jdbcType=VARCHAR},
-		audate = #{audate,jdbcType=DATE}
+		audate = #{audate,jdbcType=DATE},
+		ismain = #{ismain,jdbcType=TINYINT},
+		istemp = #{istemp,jdbcType=TINYINT}
 		where id = #{id,jdbcType=VARCHAR}
 	</update>
 </mapper>

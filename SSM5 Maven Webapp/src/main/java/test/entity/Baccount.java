@@ -35,6 +35,10 @@ public class Baccount {
 
     @DateTimeFormat(pattern="yyyy-MM-dd")
     private String audate;
+
+    private boolean ismain;
+
+    private boolean istemp;
     
     private List<Caccount> caccounts;
 
@@ -157,4 +161,20 @@ public class Baccount {
 	public void setCaccounts(List<Caccount> caccounts) {
 		this.caccounts = caccounts;
 	}
+
+    public boolean isIsmain() {
+        return ismain;
+    }
+
+    public void setIsmain(boolean ismain) {
+        this.ismain = ismain;
+    }
+
+    public boolean isIstemp() {
+        return istemp;
+    }
+
+    public void setIstemp(boolean istemp) {
+        this.istemp = istemp;
+    }
 }
