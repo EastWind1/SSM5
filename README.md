@@ -1,5 +1,5 @@
 # SSM5  
 
-使用Spring5  
-使用Log4j2  
-使用CORS  
+整合Spring5、SpringMVC、MyBatis3.4.5、Maven、Log4j2、JUnit5
+ 
+已配置CORS跨域  
