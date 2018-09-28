@@ -11,7 +11,7 @@
  Target Server Version : 80011
  File Encoding         : 65001
 
- Date: 12/09/2018 15:50:28
+ Date: 27/09/2018 10:44:16
 */
 
 SET NAMES utf8mb4;
@@ -59,14 +59,16 @@ CREATE TABLE `baccount`  (
   `reason` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `audit` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `audate` date NULL DEFAULT NULL COMMENT '审核时间',
+  `ismain` tinyint(1) NULL DEFAULT NULL,
+  `istemp` tinyint(1) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of baccount
 -- ----------------------------
-INSERT INTO `baccount` VALUES ('1', '中行账户', '132412353521', '2018-09-11', NULL, '人民币', '中国银行', NULL, '研发', '张三', '2018-08-31', NULL, '李四', '2018-09-09');
-INSERT INTO `baccount` VALUES ('2', '建行账户', '19523729857120', '2018-09-12', NULL, '人民币', '建设银行', NULL, '技术', '张四', '2018-09-12', NULL, '张三', '2018-09-27');
+INSERT INTO `baccount` VALUES ('1', '中行账户', '132412353521', '2018-09-11', NULL, '人民币', '中国银行', NULL, '研发', '张三', '2018-08-31', NULL, '李四', '2018-09-09', 1, 0);
+INSERT INTO `baccount` VALUES ('2', '建行账户', '19523729857120', '2018-09-12', NULL, '人民币', '建设银行', NULL, '技术', '张四', '2018-09-12', NULL, '张三', '2018-09-27', 0, 1);
 
 -- ----------------------------
 -- Table structure for bank
@@ -76,7 +78,7 @@ CREATE TABLE `bank`  (
   `b_id` int(10) NOT NULL AUTO_INCREMENT,
   `b_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`b_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of bank
@@ -108,18 +110,19 @@ INSERT INTO `bank_interest` VALUES (1, 2);
 INSERT INTO `bank_interest` VALUES (2, 3);
 INSERT INTO `bank_interest` VALUES (3, 4);
 INSERT INTO `bank_interest` VALUES (5, 5);
+INSERT INTO `bank_interest` VALUES (4, 10);
 
 -- ----------------------------
 -- Table structure for caccount
 -- ----------------------------
 DROP TABLE IF EXISTS `caccount`;
 CREATE TABLE `caccount`  (
-  `id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `cid` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `pid` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `currency` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `number` decimal(10, 2) NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE,
+  `cname` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `ccurrency` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `cnumber` decimal(10, 2) NULL DEFAULT NULL,
+  PRIMARY KEY (`cid`) USING BTREE,
   INDEX `pid`(`pid`) USING BTREE,
   CONSTRAINT `caccount_ibfk_1` FOREIGN KEY (`pid`) REFERENCES `baccount` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
@@ -127,7 +130,8 @@ CREATE TABLE `caccount`  (
 -- ----------------------------
 -- Records of caccount
 -- ----------------------------
-INSERT INTO `caccount` VALUES ('1', '1', '中行存款子账户', '人民币', 200000.00);
+INSERT INTO `caccount` VALUES ('1', '1', '中行存款子账户', '人民币', 300.00);
+INSERT INTO `caccount` VALUES ('207', '2', '测试子账户', '人民币', 20000.00);
 
 -- ----------------------------
 -- Table structure for delivery
@@ -192,16 +196,17 @@ CREATE TABLE `interest`  (
   `i_btime` date NULL DEFAULT NULL COMMENT '利率开始时间',
   `i_state` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '状态',
   PRIMARY KEY (`i_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of interest
 -- ----------------------------
 INSERT INTO `interest` VALUES (1, '一年存款', '存款', 2.0000, '年', 1, '2018-02-07', '生效');
-INSERT INTO `interest` VALUES (2, '一年贷款', '存款', 10.0000, '年', 0, '2018-06-05', '生效');
+INSERT INTO `interest` VALUES (2, '一年贷款', '贷款', 2.0000, '年', 5, '2018-06-05', '生效');
 INSERT INTO `interest` VALUES (3, '一年存款', '存款', 0.2000, '年', 1, '2018-09-01', '生效');
 INSERT INTO `interest` VALUES (4, '半年存款', '存款', 0.0100, '月', 6, '2018-05-10', '生效');
 INSERT INTO `interest` VALUES (5, '二十年存款', '存款', 1.0000, '年', 20, '2018-06-13', '生效');
+INSERT INTO `interest` VALUES (10, '测', '', NULL, '', 0, '2018-09-13', '');
 
 -- ----------------------------
 -- Table structure for linterest
@@ -217,7 +222,7 @@ CREATE TABLE `linterest`  (
   `l_stime` date NULL DEFAULT NULL,
   `l_state` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`l_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of linterest
@@ -306,6 +311,7 @@ CREATE TABLE `pay`  (
 -- Records of pay
 -- ----------------------------
 INSERT INTO `pay` VALUES ('1', '顺丰', '财务', '2018-09-18', '现金', '人民币', 2000.00, NULL, '张三', '2018-09-06', '通过');
+INSERT INTO `pay` VALUES ('2', '中通', '推广', '2018-09-05', '转账', '人民币', 1000.00, NULL, '李四', '2018-09-11', '通过');
 
 -- ----------------------------
 -- Table structure for pay_detail
@@ -323,7 +329,9 @@ CREATE TABLE `pay_detail`  (
 -- ----------------------------
 -- Records of pay_detail
 -- ----------------------------
+INSERT INTO `pay_detail` VALUES ('2', '2');
 INSERT INTO `pay_detail` VALUES ('1', '1');
+INSERT INTO `pay_detail` VALUES ('1', '6970');
 
 -- ----------------------------
 -- Table structure for paydetail
@@ -342,7 +350,9 @@ CREATE TABLE `paydetail`  (
 -- ----------------------------
 -- Records of paydetail
 -- ----------------------------
-INSERT INTO `paydetail` VALUES ('1', '丰巢', '支付宝', '中行账户', 2000.00, 2000.00);
+INSERT INTO `paydetail` VALUES ('1', '丰巢1', '支付宝', '中行账户', 2000.00, 2000.00);
+INSERT INTO `paydetail` VALUES ('2', '天猫', '线上支付', '支付宝', 1000.00, 1000.00);
+INSERT INTO `paydetail` VALUES ('6970', '测试', '1', '45', 0.00, 0.00);
 
 -- ----------------------------
 -- Table structure for sale_order
@@ -401,7 +411,7 @@ CREATE TABLE `user_t`  (
   `password` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `age` int(4) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Redundant;
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Redundant;
 
 -- ----------------------------
 -- Records of user_t
