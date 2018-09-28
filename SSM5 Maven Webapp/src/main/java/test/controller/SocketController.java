@@ -1,5 +1,8 @@
 package test.controller;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import javax.websocket.*;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
@@ -8,6 +11,7 @@ import java.util.concurrent.CopyOnWriteArraySet;
 
 @ServerEndpoint("/websocket")
 public class SocketController {
+    private static Logger logger = LogManager.getLogger(SocketController.class.getName());
     //静态变量，用来记录当前在线连接数。应该把它设计成线程安全的。
     private static int onlineCount = 0;
 
@@ -26,7 +30,7 @@ public class SocketController {
         this.session = session;
         webSocketSet.add(this);     //加入set中
         addOnlineCount();           //在线数加1
-        System.out.println("New connection.Count:" + getOnlineCount());
+        logger.info("New connection.Count:" + getOnlineCount());
     }
 
     /**
@@ -36,7 +40,7 @@ public class SocketController {
     public void onClose(){
         webSocketSet.remove(this);  //从set中删除
         subOnlineCount();           //在线数减1
-        System.out.println("A connection closed.Count:" + getOnlineCount());
+        logger.info("A connection closed.Count:" + getOnlineCount());
     }
 
     /**
@@ -46,7 +50,7 @@ public class SocketController {
      */
     @OnMessage
     public void onMessage(String message, Session session) {
-        System.out.println("From client "+session.getId() +".Message:" + message);
+        logger.info("From client "+session.getId() +".Message:" + message);
         //群发消息
         for(SocketController item: webSocketSet){
             try {
@@ -66,7 +70,7 @@ public class SocketController {
      */
     @OnError
     public void onError(Session session, Throwable error){
-        System.out.println("error");
+        logger.info("error");
         error.printStackTrace();
     }
 
