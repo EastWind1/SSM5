@@ -1,114 +1,114 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="test.dao.MaterialMapper">
-  <resultMap id="BaseResultMap" type="test.entity.Material">
-    <id column="wlnm" jdbcType="VARCHAR" property="wlnm" />
-    <result column="wlbh" jdbcType="VARCHAR" property="wlbh" />
-    <result column="wlmc" jdbcType="VARCHAR" property="wlmc" />
-    <result column="zsl" jdbcType="DECIMAL" property="zsl" />
-    <result column="zdw" jdbcType="VARCHAR" property="zdw" />
-    <result column="zdj" jdbcType="DECIMAL" property="zdj" />
-  </resultMap>
-  <sql id="Base_Column_List">
+    <resultMap id="BaseResultMap" type="test.entity.Material">
+        <id column="wlnm" jdbcType="VARCHAR" property="wlnm"/>
+        <result column="wlbh" jdbcType="VARCHAR" property="wlbh"/>
+        <result column="wlmc" jdbcType="VARCHAR" property="wlmc"/>
+        <result column="zsl" jdbcType="DECIMAL" property="zsl"/>
+        <result column="zdw" jdbcType="VARCHAR" property="zdw"/>
+        <result column="zdj" jdbcType="DECIMAL" property="zdj"/>
+    </resultMap>
+    <sql id="Base_Column_List">
     wlnm, wlbh, wlmc, zsl, zdw, zdj
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from material
-    where wlnm = #{wlnm,jdbcType=VARCHAR}
-  </select>
-  <select id="selectByOrderId"  resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from material,order_material
-    where material.wlbh=order_material.mid and order_material.sid = #{orderid,jdbcType=VARCHAR}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from material
+        where wlnm = #{wlnm,jdbcType=VARCHAR}
+    </select>
+    <select id="selectByOrderId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from material,order_material
+        where material.wlbh=order_material.mid and order_material.sid = #{orderid,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from material
     where wlnm = #{wlnm,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByOrder" parameterType="java.lang.String">
+    <delete id="deleteByOrder" parameterType="java.lang.String">
     delete from material
     where wlnm in (select mid from order_material where sid = #{sid,jdbcType=VARCHAR})
   </delete>
-  <insert id="insert" parameterType="test.entity.Material">
+    <insert id="insert" parameterType="test.entity.Material">
     insert into material (wlnm, wlbh, wlmc, 
       zsl, zdw, zdj)
     values (#{wlnm,jdbcType=VARCHAR}, #{wlbh,jdbcType=VARCHAR}, #{wlmc,jdbcType=VARCHAR}, 
       #{zsl,jdbcType=DECIMAL}, #{zdw,jdbcType=VARCHAR}, #{zdj,jdbcType=DECIMAL})
   </insert>
-  <insert id="insertToLink">
+    <insert id="insertToLink">
     insert into order_material (sid, mid
       )
     values (#{sid,jdbcType=VARCHAR}, #{mid,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="test.entity.Material">
-    insert into material
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="wlnm != null">
-        wlnm,
-      </if>
-      <if test="wlbh != null">
-        wlbh,
-      </if>
-      <if test="wlmc != null">
-        wlmc,
-      </if>
-      <if test="zsl != null">
-        zsl,
-      </if>
-      <if test="zdw != null">
-        zdw,
-      </if>
-      <if test="zdj != null">
-        zdj,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="wlnm != null">
-        #{wlnm,jdbcType=VARCHAR},
-      </if>
-      <if test="wlbh != null">
-        #{wlbh,jdbcType=VARCHAR},
-      </if>
-      <if test="wlmc != null">
-        #{wlmc,jdbcType=VARCHAR},
-      </if>
-      <if test="zsl != null">
-        #{zsl,jdbcType=DECIMAL},
-      </if>
-      <if test="zdw != null">
-        #{zdw,jdbcType=VARCHAR},
-      </if>
-      <if test="zdj != null">
-        #{zdj,jdbcType=DECIMAL},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="test.entity.Material">
-    update material
-    <set>
-      <if test="wlbh != null">
-        wlbh = #{wlbh,jdbcType=VARCHAR},
-      </if>
-      <if test="wlmc != null">
-        wlmc = #{wlmc,jdbcType=VARCHAR},
-      </if>
-      <if test="zsl != null">
-        zsl = #{zsl,jdbcType=DECIMAL},
-      </if>
-      <if test="zdw != null">
-        zdw = #{zdw,jdbcType=VARCHAR},
-      </if>
-      <if test="zdj != null">
-        zdj = #{zdj,jdbcType=DECIMAL},
-      </if>
-    </set>
-    where wlnm = #{wlnm,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="test.entity.Material">
+    <insert id="insertSelective" parameterType="test.entity.Material">
+        insert into material
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="wlnm != null">
+                wlnm,
+            </if>
+            <if test="wlbh != null">
+                wlbh,
+            </if>
+            <if test="wlmc != null">
+                wlmc,
+            </if>
+            <if test="zsl != null">
+                zsl,
+            </if>
+            <if test="zdw != null">
+                zdw,
+            </if>
+            <if test="zdj != null">
+                zdj,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="wlnm != null">
+                #{wlnm,jdbcType=VARCHAR},
+            </if>
+            <if test="wlbh != null">
+                #{wlbh,jdbcType=VARCHAR},
+            </if>
+            <if test="wlmc != null">
+                #{wlmc,jdbcType=VARCHAR},
+            </if>
+            <if test="zsl != null">
+                #{zsl,jdbcType=DECIMAL},
+            </if>
+            <if test="zdw != null">
+                #{zdw,jdbcType=VARCHAR},
+            </if>
+            <if test="zdj != null">
+                #{zdj,jdbcType=DECIMAL},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="test.entity.Material">
+        update material
+        <set>
+            <if test="wlbh != null">
+                wlbh = #{wlbh,jdbcType=VARCHAR},
+            </if>
+            <if test="wlmc != null">
+                wlmc = #{wlmc,jdbcType=VARCHAR},
+            </if>
+            <if test="zsl != null">
+                zsl = #{zsl,jdbcType=DECIMAL},
+            </if>
+            <if test="zdw != null">
+                zdw = #{zdw,jdbcType=VARCHAR},
+            </if>
+            <if test="zdj != null">
+                zdj = #{zdj,jdbcType=DECIMAL},
+            </if>
+        </set>
+        where wlnm = #{wlnm,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="test.entity.Material">
     update material
     set wlbh = #{wlbh,jdbcType=VARCHAR},
       wlmc = #{wlmc,jdbcType=VARCHAR},

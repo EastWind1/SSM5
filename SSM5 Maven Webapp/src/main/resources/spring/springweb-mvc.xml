@@ -19,7 +19,7 @@
     <mvc:annotation-driven>
         <mvc:message-converters register-defaults="true">
             <bean class="org.springframework.http.converter.StringHttpMessageConverter">
-                <property name="supportedMediaTypes" value = "text/plain;charset=UTF-8" />
+                <property name="supportedMediaTypes" value="text/plain;charset=UTF-8"/>
             </bean>
         </mvc:message-converters>
     </mvc:annotation-driven>
@@ -27,44 +27,44 @@
     <mvc:annotation-driven>
         <mvc:message-converters>
             <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
-            <property name="objectMapper">
-                <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
-                    <property name="targetObject">
-                        <bean class="com.fasterxml.jackson.databind.ObjectMapper">
-                            <property name="serializationInclusion" value="NON_NULL"/>
-                        </bean>
-                    </property>
-                    <property name="targetMethod" value="configure"/>
-                    <property name="arguments">
-                        <list>
-                            <value>FAIL_ON_UNKNOWN_PROPERTIES</value>
-                            <value>false</value>
-                        </list>
-                    </property>
-                </bean>
-            </property>
-        </bean>
+                <property name="objectMapper">
+                    <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+                        <property name="targetObject">
+                            <bean class="com.fasterxml.jackson.databind.ObjectMapper">
+                                <property name="serializationInclusion" value="NON_NULL"/>
+                            </bean>
+                        </property>
+                        <property name="targetMethod" value="configure"/>
+                        <property name="arguments">
+                            <list>
+                                <value>FAIL_ON_UNKNOWN_PROPERTIES</value>
+                                <value>false</value>
+                            </list>
+                        </property>
+                    </bean>
+                </property>
+            </bean>
             <bean class="org.springframework.http.converter.StringHttpMessageConverter">
-            <constructor-arg value="UTF-8"/>
-        </bean>
+                <constructor-arg value="UTF-8"/>
+            </bean>
         </mvc:message-converters>
     </mvc:annotation-driven>
     <!-- ========================================== CORS设置 ================================================= -->
     <mvc:cors>
         <mvc:mapping path="/**" allowed-origins="*" allow-credentials="true" max-age="1800"
-        allowed-methods="GET,POST,PUT,DELETE,PATCH,OPTIONS"/>
+                     allowed-methods="GET,POST,PUT,DELETE,PATCH,OPTIONS"/>
     </mvc:cors>
-    
+
     <!-- ========================================== 文件上传设置 ================================================= -->
-	<bean id="multipartResolver"
-		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-		<property name="maxUploadSize" value="20000000" />
-		<property name="defaultEncoding" value="utf-8"></property>
-	</bean>
-	
+    <bean id="multipartResolver"
+          class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="20000000"/>
+        <property name="defaultEncoding" value="utf-8"></property>
+    </bean>
+
     <!-- ======================================== ViewResolver config ============================================== -->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
         <!--网页文件存放位置-->
         <property name="prefix" value=""/>
         <!--相当于url后缀加上.jsp-->

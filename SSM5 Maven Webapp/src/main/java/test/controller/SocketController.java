@@ -23,10 +23,11 @@ public class SocketController {
 
     /**
      * 连接建立成功调用的方法
-     * @param session  可选的参数。session为与某个客户端的连接会话，需要通过它来给客户端发送数据
+     *
+     * @param session 可选的参数。session为与某个客户端的连接会话，需要通过它来给客户端发送数据
      */
     @OnOpen
-    public void onOpen(Session session){
+    public void onOpen(Session session) {
         this.session = session;
         webSocketSet.add(this);     //加入set中
         addOnlineCount();           //在线数加1
@@ -37,7 +38,7 @@ public class SocketController {
      * 连接关闭调用的方法
      */
     @OnClose
-    public void onClose(){
+    public void onClose() {
         webSocketSet.remove(this);  //从set中删除
         subOnlineCount();           //在线数减1
         logger.info("A connection closed.Count:" + getOnlineCount());
@@ -45,16 +46,17 @@ public class SocketController {
 
     /**
      * 收到客户端消息后调用的方法
+     *
      * @param message 客户端发送过来的消息
      * @param session 可选的参数
      */
     @OnMessage
     public void onMessage(String message, Session session) {
-        logger.info("From client "+session.getId() +".Message:" + message);
+        logger.info("From client " + session.getId() + ".Message:" + message);
         //群发消息
-        for(SocketController item: webSocketSet){
+        for (SocketController item : webSocketSet) {
             try {
-                if(!item.session.getId().equals(session.getId()))
+                if (!item.session.getId().equals(session.getId()))
                     item.sendMessage(message);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -65,21 +67,23 @@ public class SocketController {
 
     /**
      * 发生错误时调用
+     *
      * @param session
      * @param error
      */
     @OnError
-    public void onError(Session session, Throwable error){
+    public void onError(Session session, Throwable error) {
         logger.info("error");
         error.printStackTrace();
     }
 
     /**
      * 这个方法与上面几个方法不一样。没有用注解，是根据自己需要添加的方法。
+     *
      * @param message
      * @throws IOException
      */
-    public void sendMessage(String message) throws IOException{
+    public void sendMessage(String message) throws IOException {
         this.session.getBasicRemote().sendText(message);
         //this.session.getAsyncRemote().sendText(message);
     }

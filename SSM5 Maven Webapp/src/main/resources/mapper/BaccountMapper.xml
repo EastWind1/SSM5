@@ -1,66 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="test.dao.BaccountMapper">
-	<resultMap id="BaseResultMap" type="test.entity.Baccount">
-		<id column="id" jdbcType="VARCHAR" property="id" />
-		<result column="name" jdbcType="VARCHAR" property="name" />
-		<result column="number" jdbcType="VARCHAR" property="number" />
-		<result column="odate" jdbcType="DATE" property="odate" />
-		<result column="type" jdbcType="VARCHAR" property="type" />
-		<result column="currency" jdbcType="VARCHAR" property="currency" />
-		<result column="bank" jdbcType="VARCHAR" property="bank" />
-		<result column="agroup" jdbcType="VARCHAR" property="agroup" />
-		<result column="unit" jdbcType="VARCHAR" property="unit" />
-		<result column="applicant" jdbcType="VARCHAR" property="applicant" />
-		<result column="adate" jdbcType="DATE" property="adate" />
-		<result column="reason" jdbcType="VARCHAR" property="reason" />
-		<result column="audit" jdbcType="VARCHAR" property="audit" />
-		<result column="audate" jdbcType="DATE" property="audate" />
-		<result column="ismain" jdbcType="TINYINT" property="ismain" />
-		<result column="istemp" jdbcType="TINYINT" property="istemp" />
-	</resultMap>
-	<resultMap id="DetailResultMap" type="test.entity.Baccount">
-		<id column="id" jdbcType="VARCHAR" property="id" />
-		<result column="name" jdbcType="VARCHAR" property="name" />
-		<result column="number" jdbcType="VARCHAR" property="number" />
-		<result column="odate" jdbcType="DATE" property="odate" />
-		<result column="type" jdbcType="VARCHAR" property="type" />
-		<result column="currency" jdbcType="VARCHAR" property="currency" />
-		<result column="bank" jdbcType="VARCHAR" property="bank" />
-		<result column="agroup" jdbcType="VARCHAR" property="agroup" />
-		<result column="unit" jdbcType="VARCHAR" property="unit" />
-		<result column="applicant" jdbcType="VARCHAR" property="applicant" />
-		<result column="adate" jdbcType="DATE" property="adate" />
-		<result column="reason" jdbcType="VARCHAR" property="reason" />
-		<result column="audit" jdbcType="VARCHAR" property="audit" />
-		<result column="audate" jdbcType="DATE" property="audate" />
-		<result column="ismain" jdbcType="TINYINT" property="ismain" />
-		<result column="istemp" jdbcType="TINYINT" property="istemp" />
-		<collection property="caccounts" column="id"
-			select="test.dao.CaccountMapper.selectByParentId"/>
-	</resultMap>
-	<sql id="Base_Column_List">
+    <resultMap id="BaseResultMap" type="test.entity.Baccount">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="number" jdbcType="VARCHAR" property="number"/>
+        <result column="odate" jdbcType="DATE" property="odate"/>
+        <result column="type" jdbcType="VARCHAR" property="type"/>
+        <result column="currency" jdbcType="VARCHAR" property="currency"/>
+        <result column="bank" jdbcType="VARCHAR" property="bank"/>
+        <result column="agroup" jdbcType="VARCHAR" property="agroup"/>
+        <result column="unit" jdbcType="VARCHAR" property="unit"/>
+        <result column="applicant" jdbcType="VARCHAR" property="applicant"/>
+        <result column="adate" jdbcType="DATE" property="adate"/>
+        <result column="reason" jdbcType="VARCHAR" property="reason"/>
+        <result column="audit" jdbcType="VARCHAR" property="audit"/>
+        <result column="audate" jdbcType="DATE" property="audate"/>
+        <result column="ismain" jdbcType="TINYINT" property="ismain"/>
+        <result column="istemp" jdbcType="TINYINT" property="istemp"/>
+    </resultMap>
+    <resultMap id="DetailResultMap" type="test.entity.Baccount">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="number" jdbcType="VARCHAR" property="number"/>
+        <result column="odate" jdbcType="DATE" property="odate"/>
+        <result column="type" jdbcType="VARCHAR" property="type"/>
+        <result column="currency" jdbcType="VARCHAR" property="currency"/>
+        <result column="bank" jdbcType="VARCHAR" property="bank"/>
+        <result column="agroup" jdbcType="VARCHAR" property="agroup"/>
+        <result column="unit" jdbcType="VARCHAR" property="unit"/>
+        <result column="applicant" jdbcType="VARCHAR" property="applicant"/>
+        <result column="adate" jdbcType="DATE" property="adate"/>
+        <result column="reason" jdbcType="VARCHAR" property="reason"/>
+        <result column="audit" jdbcType="VARCHAR" property="audit"/>
+        <result column="audate" jdbcType="DATE" property="audate"/>
+        <result column="ismain" jdbcType="TINYINT" property="ismain"/>
+        <result column="istemp" jdbcType="TINYINT" property="istemp"/>
+        <collection property="caccounts" column="id"
+                    select="test.dao.CaccountMapper.selectByParentId"/>
+    </resultMap>
+    <sql id="Base_Column_List">
 		id, name, number,odate, type, currency, bank, agroup, unit, applicant,
 		adate, reason, audit,
 		audate, ismain, istemp
 	</sql>
-	<select id="selectByPrimaryKey" parameterType="java.lang.String"
-		resultMap="BaseResultMap">
-		select
-		<include refid="Base_Column_List" />
-		from baccount
-		where id = #{id,jdbcType=VARCHAR}
-	</select>
-	<select id="list" resultMap="DetailResultMap">
-		select
-		<include refid="Base_Column_List" />
-		from baccount
-	</select>
-	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    <select id="selectByPrimaryKey" parameterType="java.lang.String"
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from baccount
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <select id="list" resultMap="DetailResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from baccount
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
 		delete from baccount
 		where id = #{id,jdbcType=VARCHAR}
 	</delete>
-	<insert id="insert" parameterType="test.entity.Baccount">
+    <insert id="insert" parameterType="test.entity.Baccount">
 		insert into baccount (id, name, number,
 		odate, type, currency,
 		bank, agroup, unit,
@@ -74,161 +74,161 @@
 		#{applicant,jdbcType=VARCHAR}, #{adate,jdbcType=DATE}, #{reason,jdbcType=VARCHAR},
 		#{audit,jdbcType=VARCHAR}, #{audate,jdbcType=DATE}, #{ismain,jdbcType=TINYINT}, #{istemp,jdbcType=TINYINT})
 	</insert>
-	<insert id="insertSelective" parameterType="test.entity.Baccount">
-		insert into baccount
-		<trim prefix="(" suffix=")" suffixOverrides=",">
-			<if test="id != null">
-				id,
-			</if>
-			<if test="name != null">
-				name,
-			</if>
-			<if test="number != null">
-				number,
-			</if>
-			<if test="odate != null">
-				odate,
-			</if>
-			<if test="type != null">
-				type,
-			</if>
-			<if test="currency != null">
-				currency,
-			</if>
-			<if test="bank != null">
-				bank,
-			</if>
-			<if test="agroup != null">
-				agroup,
-			</if>
-			<if test="unit != null">
-				unit,
-			</if>
-			<if test="applicant != null">
-				applicant,
-			</if>
-			<if test="adate != null">
-				adate,
-			</if>
-			<if test="reason != null">
-				reason,
-			</if>
-			<if test="audit != null">
-				audit,
-			</if>
-			<if test="audate != null">
-				audate,
-			</if>
-			<if test="ismain != null">
-				ismain,
-			</if>
-			<if test="istemp != null">
-				istemp,
-			</if>
-		</trim>
-		<trim prefix="values (" suffix=")" suffixOverrides=",">
-			<if test="id != null">
-				#{id,jdbcType=VARCHAR},
-			</if>
-			<if test="name != null">
-				#{name,jdbcType=VARCHAR},
-			</if>
-			<if test="number != null">
-				#{number,jdbcType=VARCHAR},
-			</if>
-			<if test="odate != null">
-				#{odate,jdbcType=DATE},
-			</if>
-			<if test="type != null">
-				#{type,jdbcType=VARCHAR},
-			</if>
-			<if test="currency != null">
-				#{currency,jdbcType=VARCHAR},
-			</if>
-			<if test="bank != null">
-				#{bank,jdbcType=VARCHAR},
-			</if>
-			<if test="agroup != null">
-				#{agroup,jdbcType=VARCHAR},
-			</if>
-			<if test="unit != null">
-				#{unit,jdbcType=VARCHAR},
-			</if>
-			<if test="applicant != null">
-				#{applicant,jdbcType=VARCHAR},
-			</if>
-			<if test="adate != null">
-				#{adate,jdbcType=DATE},
-			</if>
-			<if test="reason != null">
-				#{reason,jdbcType=VARCHAR},
-			</if>
-			<if test="audit != null">
-				#{audit,jdbcType=VARCHAR},
-			</if>
-			<if test="audate != null">
-				#{audate,jdbcType=DATE},
-			</if>
-			<if test="ismain != null">
-				#{ismain,jdbcType=TINYINT},
-			</if>
-			<if test="istemp != null">
-				#{istemp,jdbcType=TINYINT},
-			</if>
-		</trim>
-	</insert>
-	<update id="updateByPrimaryKeySelective" parameterType="test.entity.Baccount">
-		update baccount
-		<set>
-			<if test="name != null">
-				name = #{name,jdbcType=VARCHAR},
-			</if>
-			<if test="number != null">
-				number = #{number,jdbcType=VARCHAR},
-			</if>
-			<if test="odate != null">
-				odate = #{odate,jdbcType=DATE},
-			</if>
-			<if test="type != null">
-				type = #{type,jdbcType=VARCHAR},
-			</if>
-			<if test="currency != null">
-				currency = #{currency,jdbcType=VARCHAR},
-			</if>
-			<if test="bank != null">
-				bank = #{bank,jdbcType=VARCHAR},
-			</if>
-			<if test="agroup != null">
-				agroup = #{agroup,jdbcType=VARCHAR},
-			</if>
-			<if test="unit != null">
-				unit = #{unit,jdbcType=VARCHAR},
-			</if>
-			<if test="applicant != null">
-				applicant = #{applicant,jdbcType=VARCHAR},
-			</if>
-			<if test="adate != null">
-				adate = #{adate,jdbcType=DATE},
-			</if>
-			<if test="reason != null">
-				reason = #{reason,jdbcType=VARCHAR},
-			</if>
-			<if test="audit != null">
-				audit = #{audit,jdbcType=VARCHAR},
-			</if>
-			<if test="audate != null">
-				audate = #{audate,jdbcType=DATE},
-			</if>
-			<if test="ismain != null">
-				ismain = #{ismain,jdbcType=TINYINT},
-			</if>
-			<if test="istemp != null">
-				istemp = #{istemp,jdbcType=TINYINT},
-			</if>
-		</set>
-		where id = #{id,jdbcType=VARCHAR}
-	</update>
-	<update id="updateByPrimaryKey" parameterType="test.entity.Baccount">
+    <insert id="insertSelective" parameterType="test.entity.Baccount">
+        insert into baccount
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="number != null">
+                number,
+            </if>
+            <if test="odate != null">
+                odate,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="currency != null">
+                currency,
+            </if>
+            <if test="bank != null">
+                bank,
+            </if>
+            <if test="agroup != null">
+                agroup,
+            </if>
+            <if test="unit != null">
+                unit,
+            </if>
+            <if test="applicant != null">
+                applicant,
+            </if>
+            <if test="adate != null">
+                adate,
+            </if>
+            <if test="reason != null">
+                reason,
+            </if>
+            <if test="audit != null">
+                audit,
+            </if>
+            <if test="audate != null">
+                audate,
+            </if>
+            <if test="ismain != null">
+                ismain,
+            </if>
+            <if test="istemp != null">
+                istemp,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="number != null">
+                #{number,jdbcType=VARCHAR},
+            </if>
+            <if test="odate != null">
+                #{odate,jdbcType=DATE},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="currency != null">
+                #{currency,jdbcType=VARCHAR},
+            </if>
+            <if test="bank != null">
+                #{bank,jdbcType=VARCHAR},
+            </if>
+            <if test="agroup != null">
+                #{agroup,jdbcType=VARCHAR},
+            </if>
+            <if test="unit != null">
+                #{unit,jdbcType=VARCHAR},
+            </if>
+            <if test="applicant != null">
+                #{applicant,jdbcType=VARCHAR},
+            </if>
+            <if test="adate != null">
+                #{adate,jdbcType=DATE},
+            </if>
+            <if test="reason != null">
+                #{reason,jdbcType=VARCHAR},
+            </if>
+            <if test="audit != null">
+                #{audit,jdbcType=VARCHAR},
+            </if>
+            <if test="audate != null">
+                #{audate,jdbcType=DATE},
+            </if>
+            <if test="ismain != null">
+                #{ismain,jdbcType=TINYINT},
+            </if>
+            <if test="istemp != null">
+                #{istemp,jdbcType=TINYINT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="test.entity.Baccount">
+        update baccount
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="number != null">
+                number = #{number,jdbcType=VARCHAR},
+            </if>
+            <if test="odate != null">
+                odate = #{odate,jdbcType=DATE},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="currency != null">
+                currency = #{currency,jdbcType=VARCHAR},
+            </if>
+            <if test="bank != null">
+                bank = #{bank,jdbcType=VARCHAR},
+            </if>
+            <if test="agroup != null">
+                agroup = #{agroup,jdbcType=VARCHAR},
+            </if>
+            <if test="unit != null">
+                unit = #{unit,jdbcType=VARCHAR},
+            </if>
+            <if test="applicant != null">
+                applicant = #{applicant,jdbcType=VARCHAR},
+            </if>
+            <if test="adate != null">
+                adate = #{adate,jdbcType=DATE},
+            </if>
+            <if test="reason != null">
+                reason = #{reason,jdbcType=VARCHAR},
+            </if>
+            <if test="audit != null">
+                audit = #{audit,jdbcType=VARCHAR},
+            </if>
+            <if test="audate != null">
+                audate = #{audate,jdbcType=DATE},
+            </if>
+            <if test="ismain != null">
+                ismain = #{ismain,jdbcType=TINYINT},
+            </if>
+            <if test="istemp != null">
+                istemp = #{istemp,jdbcType=TINYINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="test.entity.Baccount">
 		update baccount
 		set name = #{name,jdbcType=VARCHAR},
 		number = #{number,jdbcType=VARCHAR},

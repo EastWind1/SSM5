@@ -21,43 +21,43 @@ import test.entity.Paydetail;
 @Controller
 @RequestMapping("pay")
 public class PayController {
-	@Autowired
-	private PayMapper payMapper;
-	@Autowired
-	private PaydetailMapper paydetailMapper;
+    @Autowired
+    private PayMapper payMapper;
+    @Autowired
+    private PaydetailMapper paydetailMapper;
 
-	@RequestMapping(value = "", method = RequestMethod.GET)
-	@ResponseBody
-	public List<Pay> list(@Nullable String begin, @Nullable String end) {
-		HashMap params = new HashMap();
-		if(begin != null && end != null){
-			params.put("begin",begin);
-			params.put("end",end);
-		}
-		return payMapper.list(params);
-	}
+    @RequestMapping(value = "", method = RequestMethod.GET)
+    @ResponseBody
+    public List<Pay> list(@Nullable String begin, @Nullable String end) {
+        HashMap params = new HashMap();
+        if (begin != null && end != null) {
+            params.put("begin", begin);
+            params.put("end", end);
+        }
+        return payMapper.list(params);
+    }
 
-	@RequestMapping(value = "{id}", method = RequestMethod.GET)
-	@ResponseBody
-	public Pay selectById(@PathVariable String id) {
-		return payMapper.selectByPrimaryKey(id);
-	}
+    @RequestMapping(value = "{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public Pay selectById(@PathVariable String id) {
+        return payMapper.selectByPrimaryKey(id);
+    }
 
-	@RequestMapping(value = "", method = RequestMethod.POST)
-	@ResponseBody
-	@Transactional
-	public int save(@RequestBody Pay pay) {
-		if (pay.getId()!=null) {
-			paydetailMapper.deleteByPayId(pay.getId());
-			if (payMapper.selectByPrimaryKey(pay.getId()) != null)
-				payMapper.deleteByPrimaryKey(pay.getId());
-			payMapper.insertSelective(pay);
+    @RequestMapping(value = "", method = RequestMethod.POST)
+    @ResponseBody
+    @Transactional
+    public int save(@RequestBody Pay pay) {
+        if (pay.getId() != null) {
+            paydetailMapper.deleteByPayId(pay.getId());
+            if (payMapper.selectByPrimaryKey(pay.getId()) != null)
+                payMapper.deleteByPrimaryKey(pay.getId());
+            payMapper.insertSelective(pay);
 
-			for (Paydetail paydetail : pay.getPaydetails()) {
-				paydetailMapper.insertSelective(paydetail);
-				paydetailMapper.insertToLink(pay.getId(), paydetail.getId());
-			}
-		}
-		return 1;
-	}
+            for (Paydetail paydetail : pay.getPaydetails()) {
+                paydetailMapper.insertSelective(paydetail);
+                paydetailMapper.insertToLink(pay.getId(), paydetail.getId());
+            }
+        }
+        return 1;
+    }
 }

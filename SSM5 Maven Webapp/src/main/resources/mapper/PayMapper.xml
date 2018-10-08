@@ -1,55 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="test.dao.PayMapper">
-  <resultMap id="BaseResultMap" type="test.entity.Pay">
-    <id column="id" jdbcType="VARCHAR" property="id" />
-    <result column="unit" jdbcType="VARCHAR" property="unit" />
-    <result column="depart" jdbcType="VARCHAR" property="depart" />
-    <result column="etime" jdbcType="DATE" property="etime" />
-    <result column="eway" jdbcType="VARCHAR" property="eway" />
-    <result column="currency" jdbcType="VARCHAR" property="currency" />
-    <result column="number" jdbcType="DECIMAL" property="number" />
-    <result column="note" jdbcType="VARCHAR" property="note" />
-    <result column="applicant" jdbcType="VARCHAR" property="applicant" />
-    <result column="atime" jdbcType="DATE" property="atime" />
-    <result column="state" jdbcType="VARCHAR" property="state" />
-  </resultMap>
-   <resultMap id="DetailResultMap" type="test.entity.Pay">
-    <id column="id" jdbcType="VARCHAR" property="id" />
-    <result column="unit" jdbcType="VARCHAR" property="unit" />
-    <result column="depart" jdbcType="VARCHAR" property="depart" />
-    <result column="etime" jdbcType="DATE" property="etime" />
-    <result column="eway" jdbcType="VARCHAR" property="eway" />
-    <result column="currency" jdbcType="VARCHAR" property="currency" />
-    <result column="number" jdbcType="DECIMAL" property="number" />
-    <result column="note" jdbcType="VARCHAR" property="note" />
-    <result column="applicant" jdbcType="VARCHAR" property="applicant" />
-    <result column="atime" jdbcType="DATE" property="atime" />
-    <result column="state" jdbcType="VARCHAR" property="state" />
-    <collection property="paydetails" column="id" select="test.dao.PaydetailMapper.selectByPayId"/>
-  </resultMap>
-  <sql id="Base_Column_List">
+    <resultMap id="BaseResultMap" type="test.entity.Pay">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="unit" jdbcType="VARCHAR" property="unit"/>
+        <result column="depart" jdbcType="VARCHAR" property="depart"/>
+        <result column="etime" jdbcType="DATE" property="etime"/>
+        <result column="eway" jdbcType="VARCHAR" property="eway"/>
+        <result column="currency" jdbcType="VARCHAR" property="currency"/>
+        <result column="number" jdbcType="DECIMAL" property="number"/>
+        <result column="note" jdbcType="VARCHAR" property="note"/>
+        <result column="applicant" jdbcType="VARCHAR" property="applicant"/>
+        <result column="atime" jdbcType="DATE" property="atime"/>
+        <result column="state" jdbcType="VARCHAR" property="state"/>
+    </resultMap>
+    <resultMap id="DetailResultMap" type="test.entity.Pay">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="unit" jdbcType="VARCHAR" property="unit"/>
+        <result column="depart" jdbcType="VARCHAR" property="depart"/>
+        <result column="etime" jdbcType="DATE" property="etime"/>
+        <result column="eway" jdbcType="VARCHAR" property="eway"/>
+        <result column="currency" jdbcType="VARCHAR" property="currency"/>
+        <result column="number" jdbcType="DECIMAL" property="number"/>
+        <result column="note" jdbcType="VARCHAR" property="note"/>
+        <result column="applicant" jdbcType="VARCHAR" property="applicant"/>
+        <result column="atime" jdbcType="DATE" property="atime"/>
+        <result column="state" jdbcType="VARCHAR" property="state"/>
+        <collection property="paydetails" column="id" select="test.dao.PaydetailMapper.selectByPayId"/>
+    </resultMap>
+    <sql id="Base_Column_List">
     id, unit, depart, etime, eway, currency, number, note, applicant, atime, state
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="DetailResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from pay
-    where id = #{id,jdbcType=VARCHAR}
-  </select>
-  <select id="list" parameterType="hashMap" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from pay
-    <if test="begin != null and end != null">
-    where atime between #{begin,jdbcType=DATE} and #{end,jdbcType=DATE}
-    </if>
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="DetailResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from pay
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <select id="list" parameterType="hashMap" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from pay
+        <if test="begin != null and end != null">
+            where atime between #{begin,jdbcType=DATE} and #{end,jdbcType=DATE}
+        </if>
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from pay
     where id = #{id,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="test.entity.Pay">
+    <insert id="insert" parameterType="test.entity.Pay">
     insert into pay (id, unit, depart, 
       etime, eway, currency, 
       number, note, applicant, 
@@ -59,116 +59,116 @@
       #{number,jdbcType=DECIMAL}, #{note,jdbcType=VARCHAR}, #{applicant,jdbcType=VARCHAR}, 
       #{atime,jdbcType=DATE}, #{state,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="test.entity.Pay">
-    insert into pay
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="unit != null">
-        unit,
-      </if>
-      <if test="depart != null">
-        depart,
-      </if>
-      <if test="etime != null">
-        etime,
-      </if>
-      <if test="eway != null">
-        eway,
-      </if>
-      <if test="currency != null">
-        currency,
-      </if>
-      <if test="number != null">
-        number,
-      </if>
-      <if test="note != null">
-        note,
-      </if>
-      <if test="applicant != null">
-        applicant,
-      </if>
-      <if test="atime != null">
-        atime,
-      </if>
-      <if test="state != null">
-        state,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=VARCHAR},
-      </if>
-      <if test="unit != null">
-        #{unit,jdbcType=VARCHAR},
-      </if>
-      <if test="depart != null">
-        #{depart,jdbcType=VARCHAR},
-      </if>
-      <if test="etime != null">
-        #{etime,jdbcType=DATE},
-      </if>
-      <if test="eway != null">
-        #{eway,jdbcType=VARCHAR},
-      </if>
-      <if test="currency != null">
-        #{currency,jdbcType=VARCHAR},
-      </if>
-      <if test="number != null">
-        #{number,jdbcType=DECIMAL},
-      </if>
-      <if test="note != null">
-        #{note,jdbcType=VARCHAR},
-      </if>
-      <if test="applicant != null">
-        #{applicant,jdbcType=VARCHAR},
-      </if>
-      <if test="atime != null">
-        #{atime,jdbcType=DATE},
-      </if>
-      <if test="state != null">
-        #{state,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="test.entity.Pay">
-    update pay
-    <set>
-      <if test="unit != null">
-        unit = #{unit,jdbcType=VARCHAR},
-      </if>
-      <if test="depart != null">
-        depart = #{depart,jdbcType=VARCHAR},
-      </if>
-      <if test="etime != null">
-        etime = #{etime,jdbcType=DATE},
-      </if>
-      <if test="eway != null">
-        eway = #{eway,jdbcType=VARCHAR},
-      </if>
-      <if test="currency != null">
-        currency = #{currency,jdbcType=VARCHAR},
-      </if>
-      <if test="number != null">
-        number = #{number,jdbcType=DECIMAL},
-      </if>
-      <if test="note != null">
-        note = #{note,jdbcType=VARCHAR},
-      </if>
-      <if test="applicant != null">
-        applicant = #{applicant,jdbcType=VARCHAR},
-      </if>
-      <if test="atime != null">
-        atime = #{atime,jdbcType=DATE},
-      </if>
-      <if test="state != null">
-        state = #{state,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="test.entity.Pay">
+    <insert id="insertSelective" parameterType="test.entity.Pay">
+        insert into pay
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="unit != null">
+                unit,
+            </if>
+            <if test="depart != null">
+                depart,
+            </if>
+            <if test="etime != null">
+                etime,
+            </if>
+            <if test="eway != null">
+                eway,
+            </if>
+            <if test="currency != null">
+                currency,
+            </if>
+            <if test="number != null">
+                number,
+            </if>
+            <if test="note != null">
+                note,
+            </if>
+            <if test="applicant != null">
+                applicant,
+            </if>
+            <if test="atime != null">
+                atime,
+            </if>
+            <if test="state != null">
+                state,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="unit != null">
+                #{unit,jdbcType=VARCHAR},
+            </if>
+            <if test="depart != null">
+                #{depart,jdbcType=VARCHAR},
+            </if>
+            <if test="etime != null">
+                #{etime,jdbcType=DATE},
+            </if>
+            <if test="eway != null">
+                #{eway,jdbcType=VARCHAR},
+            </if>
+            <if test="currency != null">
+                #{currency,jdbcType=VARCHAR},
+            </if>
+            <if test="number != null">
+                #{number,jdbcType=DECIMAL},
+            </if>
+            <if test="note != null">
+                #{note,jdbcType=VARCHAR},
+            </if>
+            <if test="applicant != null">
+                #{applicant,jdbcType=VARCHAR},
+            </if>
+            <if test="atime != null">
+                #{atime,jdbcType=DATE},
+            </if>
+            <if test="state != null">
+                #{state,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="test.entity.Pay">
+        update pay
+        <set>
+            <if test="unit != null">
+                unit = #{unit,jdbcType=VARCHAR},
+            </if>
+            <if test="depart != null">
+                depart = #{depart,jdbcType=VARCHAR},
+            </if>
+            <if test="etime != null">
+                etime = #{etime,jdbcType=DATE},
+            </if>
+            <if test="eway != null">
+                eway = #{eway,jdbcType=VARCHAR},
+            </if>
+            <if test="currency != null">
+                currency = #{currency,jdbcType=VARCHAR},
+            </if>
+            <if test="number != null">
+                number = #{number,jdbcType=DECIMAL},
+            </if>
+            <if test="note != null">
+                note = #{note,jdbcType=VARCHAR},
+            </if>
+            <if test="applicant != null">
+                applicant = #{applicant,jdbcType=VARCHAR},
+            </if>
+            <if test="atime != null">
+                atime = #{atime,jdbcType=DATE},
+            </if>
+            <if test="state != null">
+                state = #{state,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="test.entity.Pay">
     update pay
     set unit = #{unit,jdbcType=VARCHAR},
       depart = #{depart,jdbcType=VARCHAR},

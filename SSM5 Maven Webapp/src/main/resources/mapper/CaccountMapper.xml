@@ -1,94 +1,94 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="test.dao.CaccountMapper">
-  <resultMap id="BaseResultMap" type="test.entity.Caccount">
-    <id column="cid" jdbcType="VARCHAR" property="cid" />
-    <result column="pid" jdbcType="VARCHAR" property="pid" />
-    <result column="cname" jdbcType="VARCHAR" property="cname" />
-    <result column="ccurrency" jdbcType="VARCHAR" property="ccurrency" />
-    <result column="cnumber" jdbcType="DECIMAL" property="cnumber" />
-  </resultMap>
-  <sql id="Base_Column_List">
+    <resultMap id="BaseResultMap" type="test.entity.Caccount">
+        <id column="cid" jdbcType="VARCHAR" property="cid"/>
+        <result column="pid" jdbcType="VARCHAR" property="pid"/>
+        <result column="cname" jdbcType="VARCHAR" property="cname"/>
+        <result column="ccurrency" jdbcType="VARCHAR" property="ccurrency"/>
+        <result column="cnumber" jdbcType="DECIMAL" property="cnumber"/>
+    </resultMap>
+    <sql id="Base_Column_List">
     cid, pid, cname, ccurrency, cnumber
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from caccount
-    where cid = #{cid,jdbcType=VARCHAR}
-  </select>
-  <select id="selectByParentId" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from caccount
-    where pid = #{pid,jdbcType=VARCHAR}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from caccount
+        where cid = #{cid,jdbcType=VARCHAR}
+    </select>
+    <select id="selectByParentId" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from caccount
+        where pid = #{pid,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from caccount
     where cid = #{cid,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="test.entity.Caccount">
+    <insert id="insert" parameterType="test.entity.Caccount">
     insert into caccount (cid, pid, cname, 
       ccurrency, cnumber)
     values (#{cid,jdbcType=VARCHAR}, #{pid,jdbcType=VARCHAR}, #{cname,jdbcType=VARCHAR}, 
       #{ccurrency,jdbcType=VARCHAR}, #{cnumber,jdbcType=DECIMAL})
   </insert>
-  <insert id="insertSelective" parameterType="test.entity.Caccount">
-    insert into caccount
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="cid != null">
-        cid,
-      </if>
-      <if test="pid != null">
-        pid,
-      </if>
-      <if test="cname != null">
-        cname,
-      </if>
-      <if test="ccurrency != null">
-        ccurrency,
-      </if>
-      <if test="cnumber != null">
-        cnumber,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="cid != null">
-        #{cid,jdbcType=VARCHAR},
-      </if>
-      <if test="pid != null">
-        #{pid,jdbcType=VARCHAR},
-      </if>
-      <if test="cname != null">
-        #{cname,jdbcType=VARCHAR},
-      </if>
-      <if test="ccurrency != null">
-        #{ccurrency,jdbcType=VARCHAR},
-      </if>
-      <if test="cnumber != null">
-        #{cnumber,jdbcType=DECIMAL},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="test.entity.Caccount">
-    update caccount
-    <set>
-      <if test="pid != null">
-        pid = #{pid,jdbcType=VARCHAR},
-      </if>
-      <if test="cname != null">
-        cname = #{cname,jdbcType=VARCHAR},
-      </if>
-      <if test="ccurrency != null">
-        ccurrency = #{ccurrency,jdbcType=VARCHAR},
-      </if>
-      <if test="cnumber != null">
-        cnumber = #{cnumber,jdbcType=DECIMAL},
-      </if>
-    </set>
-    where cid = #{cid,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="test.entity.Caccount">
+    <insert id="insertSelective" parameterType="test.entity.Caccount">
+        insert into caccount
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="cid != null">
+                cid,
+            </if>
+            <if test="pid != null">
+                pid,
+            </if>
+            <if test="cname != null">
+                cname,
+            </if>
+            <if test="ccurrency != null">
+                ccurrency,
+            </if>
+            <if test="cnumber != null">
+                cnumber,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="cid != null">
+                #{cid,jdbcType=VARCHAR},
+            </if>
+            <if test="pid != null">
+                #{pid,jdbcType=VARCHAR},
+            </if>
+            <if test="cname != null">
+                #{cname,jdbcType=VARCHAR},
+            </if>
+            <if test="ccurrency != null">
+                #{ccurrency,jdbcType=VARCHAR},
+            </if>
+            <if test="cnumber != null">
+                #{cnumber,jdbcType=DECIMAL},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="test.entity.Caccount">
+        update caccount
+        <set>
+            <if test="pid != null">
+                pid = #{pid,jdbcType=VARCHAR},
+            </if>
+            <if test="cname != null">
+                cname = #{cname,jdbcType=VARCHAR},
+            </if>
+            <if test="ccurrency != null">
+                ccurrency = #{ccurrency,jdbcType=VARCHAR},
+            </if>
+            <if test="cnumber != null">
+                cnumber = #{cnumber,jdbcType=DECIMAL},
+            </if>
+        </set>
+        where cid = #{cid,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="test.entity.Caccount">
     update caccount
     set pid = #{pid,jdbcType=VARCHAR},
       cname = #{cname,jdbcType=VARCHAR},

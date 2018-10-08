@@ -11,23 +11,24 @@ import test.service.AccountService;
 
 @Service("accountService")
 public class AccountServiceImpl implements AccountService {
-	@Autowired
-	private AccountMapper accountMapper;
-	@Override
-	public List<Account> getAccounts() {
-		return accountMapper.selectAccounts();
-	}
+    @Autowired
+    private AccountMapper accountMapper;
 
-	@Override
-	public boolean audit(Account account) {
-		accountMapper.updateByPrimaryKeySelective(account);
-		return true;
-	}
+    @Override
+    public List<Account> getAccounts() {
+        return accountMapper.selectAccounts();
+    }
 
-	@Override
-	public boolean addAccount(Account account) {
-		accountMapper.insert(account);
-		return true;
-	}
+    @Override
+    public boolean audit(Account account) {
+        accountMapper.updateByPrimaryKeySelective(account);
+        return true;
+    }
+
+    @Override
+    public boolean addAccount(Account account) {
+        accountMapper.insert(account);
+        return true;
+    }
 
 }

@@ -1,116 +1,116 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="test.dao.SaleOrderMapper">
-  <resultMap id="BaseResultMap" type="test.entity.SaleOrder">
-    <id column="ddnm" jdbcType="VARCHAR" property="ddnm" />
-    <result column="ddbh" jdbcType="VARCHAR" property="ddbh" />
-    <result column="ywrq" jdbcType="TIMESTAMP" property="ywrq" />
-    <result column="khmc" jdbcType="VARCHAR" property="khmc" />
-    <result column="zje" jdbcType="DECIMAL" property="zje" />
-    <result column="khdh" jdbcType="VARCHAR" property="khdh" />
-  </resultMap>
-  <resultMap id="DetailResultMap" type="test.entity.SaleOrder">
-    <id column="ddnm" jdbcType="VARCHAR" property="ddnm" />
-    <result column="ddbh" jdbcType="VARCHAR" property="ddbh" />
-    <result column="ywrq" jdbcType="TIMESTAMP" property="ywrq" />
-    <result column="khmc" jdbcType="VARCHAR" property="khmc" />
-    <result column="zje" jdbcType="DECIMAL" property="zje" />
-    <result column="khdh" jdbcType="VARCHAR" property="khdh" />
-    <collection property="jh" column="ddnm" select="test.dao.DeliveryMapper.selectByOrderId"/>
-    <collection property="wl" column="ddnm" select="test.dao.MaterialMapper.selectByOrderId"/>
-  </resultMap>
-  <sql id="Base_Column_List">
+    <resultMap id="BaseResultMap" type="test.entity.SaleOrder">
+        <id column="ddnm" jdbcType="VARCHAR" property="ddnm"/>
+        <result column="ddbh" jdbcType="VARCHAR" property="ddbh"/>
+        <result column="ywrq" jdbcType="TIMESTAMP" property="ywrq"/>
+        <result column="khmc" jdbcType="VARCHAR" property="khmc"/>
+        <result column="zje" jdbcType="DECIMAL" property="zje"/>
+        <result column="khdh" jdbcType="VARCHAR" property="khdh"/>
+    </resultMap>
+    <resultMap id="DetailResultMap" type="test.entity.SaleOrder">
+        <id column="ddnm" jdbcType="VARCHAR" property="ddnm"/>
+        <result column="ddbh" jdbcType="VARCHAR" property="ddbh"/>
+        <result column="ywrq" jdbcType="TIMESTAMP" property="ywrq"/>
+        <result column="khmc" jdbcType="VARCHAR" property="khmc"/>
+        <result column="zje" jdbcType="DECIMAL" property="zje"/>
+        <result column="khdh" jdbcType="VARCHAR" property="khdh"/>
+        <collection property="jh" column="ddnm" select="test.dao.DeliveryMapper.selectByOrderId"/>
+        <collection property="wl" column="ddnm" select="test.dao.MaterialMapper.selectByOrderId"/>
+    </resultMap>
+    <sql id="Base_Column_List">
     ddnm, ddbh, ywrq, khmc, zje, khdh
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="DetailResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from sale_order
-    where ddnm = #{ddnm,jdbcType=VARCHAR}
-  </select>
-  <select id="list" parameterType="hashMap" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from sale_order
-    <if test="begin != null and end != null">
-    where ywrq between #{begin,jdbcType=TIMESTAMP} and #{end,jdbcType=TIMESTAMP}
-    </if>
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="DetailResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sale_order
+        where ddnm = #{ddnm,jdbcType=VARCHAR}
+    </select>
+    <select id="list" parameterType="hashMap" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sale_order
+        <if test="begin != null and end != null">
+            where ywrq between #{begin,jdbcType=TIMESTAMP} and #{end,jdbcType=TIMESTAMP}
+        </if>
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from sale_order
     where ddnm = #{ddnm,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="test.entity.SaleOrder">
+    <insert id="insert" parameterType="test.entity.SaleOrder">
     insert into sale_order (ddnm, ddbh, ywrq, 
       khmc, zje, khdh)
     values (#{ddnm,jdbcType=VARCHAR}, #{ddbh,jdbcType=VARCHAR}, #{ywrq,jdbcType=TIMESTAMP}, 
       #{khmc,jdbcType=VARCHAR}, #{zje,jdbcType=DECIMAL}, #{khdh,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="test.entity.SaleOrder">
-    insert into sale_order
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="ddnm != null">
-        ddnm,
-      </if>
-      <if test="ddbh != null">
-        ddbh,
-      </if>
-      <if test="ywrq != null">
-        ywrq,
-      </if>
-      <if test="khmc != null">
-        khmc,
-      </if>
-      <if test="zje != null">
-        zje,
-      </if>
-      <if test="khdh != null">
-        khdh,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="ddnm != null">
-        #{ddnm,jdbcType=VARCHAR},
-      </if>
-      <if test="ddbh != null">
-        #{ddbh,jdbcType=VARCHAR},
-      </if>
-      <if test="ywrq != null">
-        #{ywrq,jdbcType=TIMESTAMP},
-      </if>
-      <if test="khmc != null">
-        #{khmc,jdbcType=VARCHAR},
-      </if>
-      <if test="zje != null">
-        #{zje,jdbcType=DECIMAL},
-      </if>
-      <if test="khdh != null">
-        #{khdh,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="test.entity.SaleOrder">
-    update sale_order
-    <set>
-      <if test="ddbh != null">
-        ddbh = #{ddbh,jdbcType=VARCHAR},
-      </if>
-      <if test="ywrq != null">
-        ywrq = #{ywrq,jdbcType=TIMESTAMP},
-      </if>
-      <if test="khmc != null">
-        khmc = #{khmc,jdbcType=VARCHAR},
-      </if>
-      <if test="zje != null">
-        zje = #{zje,jdbcType=DECIMAL},
-      </if>
-      <if test="khdh != null">
-        khdh = #{khdh,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where ddnm = #{ddnm,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="test.entity.SaleOrder">
+    <insert id="insertSelective" parameterType="test.entity.SaleOrder">
+        insert into sale_order
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ddnm != null">
+                ddnm,
+            </if>
+            <if test="ddbh != null">
+                ddbh,
+            </if>
+            <if test="ywrq != null">
+                ywrq,
+            </if>
+            <if test="khmc != null">
+                khmc,
+            </if>
+            <if test="zje != null">
+                zje,
+            </if>
+            <if test="khdh != null">
+                khdh,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="ddnm != null">
+                #{ddnm,jdbcType=VARCHAR},
+            </if>
+            <if test="ddbh != null">
+                #{ddbh,jdbcType=VARCHAR},
+            </if>
+            <if test="ywrq != null">
+                #{ywrq,jdbcType=TIMESTAMP},
+            </if>
+            <if test="khmc != null">
+                #{khmc,jdbcType=VARCHAR},
+            </if>
+            <if test="zje != null">
+                #{zje,jdbcType=DECIMAL},
+            </if>
+            <if test="khdh != null">
+                #{khdh,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="test.entity.SaleOrder">
+        update sale_order
+        <set>
+            <if test="ddbh != null">
+                ddbh = #{ddbh,jdbcType=VARCHAR},
+            </if>
+            <if test="ywrq != null">
+                ywrq = #{ywrq,jdbcType=TIMESTAMP},
+            </if>
+            <if test="khmc != null">
+                khmc = #{khmc,jdbcType=VARCHAR},
+            </if>
+            <if test="zje != null">
+                zje = #{zje,jdbcType=DECIMAL},
+            </if>
+            <if test="khdh != null">
+                khdh = #{khdh,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where ddnm = #{ddnm,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="test.entity.SaleOrder">
     update sale_order
     set ddbh = #{ddbh,jdbcType=VARCHAR},
       ywrq = #{ywrq,jdbcType=TIMESTAMP},
